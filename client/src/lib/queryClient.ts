@@ -2,8 +2,28 @@ import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
-    const text = (await res.text()) || res.statusText;
-    throw new Error(`${res.status}: ${text}`);
+    let errorMessage: string;
+    
+    try {
+      // Try to parse the response as JSON first
+      const errorData = await res.json();
+      
+      if (res.status === 429) {
+        // Rate limit error - include the reset time if available
+        const resetTime = errorData.resetTime ? new Date(errorData.resetTime) : null;
+        const resetTimeStr = resetTime ? ` Try again at ${resetTime.toLocaleTimeString()}.` : '';
+        errorMessage = `Rate limit exceeded.${resetTimeStr} Please wait before making another request.`;
+      } else {
+        // Other errors
+        errorMessage = errorData.message || `${res.status}: ${res.statusText}`;
+      }
+    } catch (e) {
+      // If response is not JSON, use text
+      const text = await res.text();
+      errorMessage = text || `${res.status}: ${res.statusText}`;
+    }
+    
+    throw new Error(errorMessage);
   }
 }
 

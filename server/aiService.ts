@@ -209,23 +209,27 @@ async function analyzeWithGemini(text: string): Promise<AnalysisResult> {
   }
 
   try {
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+    // Using the latest Gemini 1.5 Pro model
+    const response = await fetch("https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "x-goog-api-key": apiKey
       },
       body: JSON.stringify({
         contents: [
           {
             role: "user",
             parts: [
-              { text: LOGOS_SYSTEM_PROMPT },
+              { text: LOGOS_SYSTEM_PROMPT + "\n\nAnalyze the following argument and return JSON:" },
               { text: text }
             ]
           }
         ],
         generationConfig: {
-          temperature: 0.2
+          temperature: 0.2,
+          responseType: "JSON",
+          responseMimeType: "application/json"
         }
       })
     });
@@ -257,7 +261,7 @@ async function analyzeWithGemini(text: string): Promise<AnalysisResult> {
     // Add the specific model info
     return {
       ...validatedData,
-      modelName: "Gemini Pro"
+      modelName: "Gemini 1.5 Pro"
     };
   } catch (error) {
     console.error("Gemini analysis error:", error);
