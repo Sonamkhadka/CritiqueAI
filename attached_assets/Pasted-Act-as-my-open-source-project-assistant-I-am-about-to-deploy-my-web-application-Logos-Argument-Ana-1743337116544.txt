@@ -1,0 +1,42 @@
+Act as my open-source project assistant. I am about to deploy my web application "Logos Argument Analyzer" and want to make it open source. Please perform the following tasks to prepare the repository:
+
+**1. Generate Documentation Files:**
+
+   a.  **`README.md`:** Create a comprehensive README file. Include the following sections:
+       *   **Project Title:** Logos Argument Analyzer
+       *   **Short Description:** A web tool that analyzes the logical structure and emotional tone of user-provided text using AI models (OpenAI, DeepSeek, Gemini).
+       *   **Core Features:** List the key features (Text input, AI model selection, Claim/Premises extraction, Emotional scoring [Anger, Sadness, Joy, Fear, Surprise], Score visualization chart, Report sharing/downloading/printing, Local storage history).
+       *   **How it Works:** Briefly explain the flow (frontend UI -> backend -> external AI API call with "Logos" persona instructions -> parse JSON response -> display report). Mention the expected JSON structure: `{ "claim": "...", "premises": ["...", "..."], "emotions": { "Anger": N, ... } }`.
+       *   **Technology Stack:** List the primary technologies used (e.g., `[Your Frontend Framework like React/Vue/Svelte/Vanilla JS]`, `[Your Backend Framework like Node.js/Express or Python/Flask]`, `[Your Charting Library]`).
+       *   **Getting Started / Installation:**
+           *   Prerequisites (e.g., Node.js version `[Your Node version]`, Python version `[Your Python version]`, git).
+           *   Clone command: `git clone [Your Repository URL when ready]`
+           *   Dependency installation: `[Your Frontend install command e.g., cd frontend && npm install]` and `[Your Backend install command e.g., cd backend && npm install or pip install -r requirements.txt]`
+           *   **API Key Configuration (CRITICAL):** State clearly that users **MUST** obtain their own API keys for OpenAI, DeepSeek, and Gemini. Explain they need to be configured as Replit Secrets (Environment Variables). List the exact variable names required: `OPENAI_API_KEY`, `DEEPSEEK_API_KEY`, `GEMINI_API_KEY`. **Emphasize the app won't work without these.**
+           *   Run command: `[Your command to run the app locally e.g., npm run dev]`
+       *   **Usage:** Briefly describe user steps (enter text, select model, click analyze, view report).
+       *   **License:** State that the project is licensed under the MIT License (or `[Specify Your Chosen License if different]`) and link to the `LICENSE` file.
+       *   **Contributing:** Link to the `CONTRIBUTING.md` file.
+
+   b.  **`LICENSE`:** Generate the full text for the **MIT License**. Use `[Your Name or Username]` as the copyright holder and `[Current Year]` as the year.
+       *(If you chose a different license in the README, request that license text instead, e.g., "Generate the full text for the Apache License 2.0")*
+
+   c.  **`CONTRIBUTING.md`:** Create a basic contribution guidelines file. Include sections on:
+       *   How to report bugs (use GitHub Issues, provide steps to reproduce).
+       *   How to suggest features (use GitHub Issues).
+       *   Pull Request process (mention forking, branching, submitting PRs, and optionally linking to a code style guide if you have one).
+       *   Link to the `CODE_OF_CONDUCT.md`.
+
+   d.  **`CODE_OF_CONDUCT.md`:** Generate a Code of Conduct based on the Contributor Covenant template (v2.1 or latest common version).
+
+**2. Provide Final Check Reminders:**
+
+   After generating the files, please remind me to perform these crucial manual checks *before* I push the code to a public repository:
+    *   **Review Code:** Double-check ALL code (frontend and backend) to ensure NO API keys, secrets, or other sensitive credentials are hardcoded. Confirm they are ONLY read from environment variables (Replit Secrets).
+    *   **Clean Up:** Remove any unnecessary comments, debug logs, or unused files.
+    *   **Test Locally:** Run the application one last time using the environment variables to ensure it works as expected with the documented setup.
+    *   **Create Public Repository:** Remind me I need to create the actual public repository on GitHub (or GitLab/Bitbucket).
+    *   **Push Code:** Remind me to commit these newly generated files and push the entire project to the public repository.
+
+Please generate the content for the specified files (`README.md`, `LICENSE`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`) and then provide the list of reminder checks.
+

@@ -1,10 +1,46 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
+// Define the particle interface
+interface Particle {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  opacity: number;
+  duration: number;
+  delay: number;
+}
+
 export default function Hero() {
+  // State for particles
+  const [particles, setParticles] = useState<Particle[]>([]);
+  
+  // Generate particles on component mount
+  useEffect(() => {
+    const generateParticles = () => {
+      const newParticles: Particle[] = [];
+      // Generate 25 particles
+      for (let i = 0; i < 25; i++) {
+        newParticles.push({
+          id: i,
+          x: Math.random() * 100, // Random x position (0-100%)
+          y: Math.random() * 100, // Random y position (0-100%)
+          size: Math.random() * 4 + 1, // Random size (1-5px)
+          opacity: Math.random() * 0.4 + 0.1, // Random opacity (0.1-0.5)
+          duration: Math.random() * 15 + 25, // Random duration (25-40s)
+          delay: Math.random() * 5, // Random delay (0-5s)
+        });
+      }
+      setParticles(newParticles);
+    };
+
+    generateParticles();
+  }, []);
+
   // Animation variants for staggered entrance with gentler transitions
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -40,8 +76,35 @@ export default function Hero() {
       {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-white to-blue-50 opacity-30"></div>
       
-      {/* Subtle floating elements */}
+      {/* Moving particles background */}
       <div className="absolute inset-0 z-0 overflow-hidden">
+        {particles.map(particle => (
+          <motion.div
+            key={particle.id}
+            className="absolute rounded-full bg-primary/10"
+            style={{
+              left: `${particle.x}%`,
+              top: `${particle.y}%`,
+              width: `${particle.size}px`,
+              height: `${particle.size}px`,
+              opacity: particle.opacity,
+            }}
+            animate={{
+              x: [0, Math.random() * 100 - 50],
+              y: [0, Math.random() * 100 - 50],
+              opacity: [particle.opacity, particle.opacity / 2, particle.opacity],
+            }}
+            transition={{
+              duration: particle.duration,
+              delay: particle.delay,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "linear"
+            }}
+          />
+        ))}
+        
+        {/* Larger floating elements for additional motion */}
         <motion.div 
           className="absolute w-32 h-32 rounded-full bg-primary/5 top-10 left-1/4 blur-xl"
           animate={{ 
