@@ -210,31 +210,38 @@ async function analyzeWithGemini(text: string): Promise<AnalysisResult> {
   }
 
   try {
-    // Initialize the Gemini client
-    const genAI = new GoogleGenAI({ apiKey });
-    
-    // Combine the system prompt and user text
-    const prompt = `${LOGOS_SYSTEM_PROMPT}\n\nAnalyze the following argument and return JSON format only:\n\n${text}`;
-    
-    // Call the model directly using the models.generateContent method
-    const result = await genAI.models.generateContent({
-      model: "gemini-2.5-pro-exp-03-25",
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature: 0.2,
+    // Use fetch directly to call the Gemini API with the specified model
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-2.5-pro-exp-03-25:generateContent?key=${apiKey}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              { text: `${LOGOS_SYSTEM_PROMPT}\n\nAnalyze the following argument and return in JSON format only:\n\n${text}` }
+            ]
+          }
+        ],
+        generationConfig: {
+          temperature: 0.2,
+        },
+      }),
     });
-    
-    // Extract the response text
-    if (!result || !result.text) {
-      throw new Error("Gemini returned an empty response");
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`Gemini API error: ${errorData.error?.message || response.statusText}`);
     }
+
+    const responseData = await response.json();
+    const content = responseData.candidates?.[0]?.content?.parts?.[0]?.text;
     
-    const content = result.text;
     if (!content) {
       throw new Error("Gemini returned an empty response");
     }
-    
+
     // Extract JSON from the response (handle potential text wrapping the JSON)
     const jsonMatch = content.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {

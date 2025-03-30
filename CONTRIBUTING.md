@@ -1,6 +1,14 @@
 # Contributing to Logos Argument Analyzer
 
-Thank you for considering contributing to the Logos Argument Analyzer! This document outlines the process for contributing to the project.
+Thank you for considering contributing to the Logos Argument Analyzer! This document outlines the process for contributing to this AI-powered argument analysis tool.
+
+## Supported AI Models
+
+The application currently supports three AI models:
+
+1. **OpenAI GPT-4o**: The latest model from OpenAI with enhanced reasoning capabilities
+2. **DeepSeek Chat**: A powerful model from DeepSeek
+3. **Google Gemini 2.5 Pro**: Google's advanced Gemini model (gemini-2.5-pro-exp-03-25)
 
 ## Code of Conduct
 
@@ -23,7 +31,7 @@ We track bugs using GitHub Issues. If you've found a bug, please create an issue
 
 ### Security Vulnerabilities
 
-If you discover a security vulnerability, please do NOT open a public issue. Instead, send an email to [your-email@example.com] with details about the vulnerability.
+If you discover a security vulnerability, please do NOT open a public issue. Instead, submit a confidential security report through the repository's security advisories.
 
 ## How to Suggest Features
 
@@ -59,8 +67,12 @@ We welcome feature suggestions! To suggest a feature:
 1. Fork the repository
 2. Clone your fork locally
 3. Install dependencies with `npm install`
-4. Setup API keys as described in the [README](README.md)
+4. **Important**: Setup API keys as described in the [README](README.md)
+   - OPENAI_API_KEY (for GPT-4o access)
+   - DEEPSEEK_API_KEY (for DeepSeek Chat access)
+   - GEMINI_API_KEY (for Gemini 2.5 Pro access)
 5. Run the development server with `npm run dev`
+6. Note: The application implements rate limiting (5 requests per minute)
 
 ## Coding Standards
 
