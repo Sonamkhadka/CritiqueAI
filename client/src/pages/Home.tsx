@@ -1,130 +1,81 @@
-import { useState } from "react";
+import React from "react";
+import { motion } from "framer-motion";
+import Hero from "@/components/Hero";
+import Navbar from "@/components/Navbar";
+import ApiGuide from "@/components/ApiGuide";
+import Features from "@/components/Features";
+import Footer from "@/components/Footer";
+import Pricing from "@/components/Pricing";
+import Faq from "@/components/Faq";
+import NewsletterSignup from "@/components/NewsletterSignup";
+import Testimonials from "@/components/Testimonials";
 import ArgumentForm from "@/components/ArgumentForm";
 import ResultsDisplay from "@/components/ResultsDisplay";
-import HistoryList from "@/components/HistoryList";
-import ApiGuide from "@/components/ApiGuide";
-import { AnalysisResult } from "@shared/schema";
-import { useToast } from "@/hooks/use-toast";
-import { LogoSvg } from "@/components/Logo";
-
-export interface HistoryItem {
-  id: string;
-  inputText: string;
-  result: AnalysisResult;
-  aiModel: string;
-  timestamp: Date;
-}
+import { useParams, useLocation } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<AnalysisResult | null>(null);
-  const [selectedModel, setSelectedModel] = useState("openai");
-  const { toast } = useToast();
-  
-  // This function will be passed to the ArgumentForm component
-  const onAnalysisRequested = (isLoading: boolean, error: string | null, result: AnalysisResult | null, model: string) => {
-    setLoading(isLoading);
-    setError(error);
-    setResult(result);
-    setSelectedModel(model);
-    
-    if (error) {
-      toast({
-        variant: "destructive",
-        title: "Analysis Failed",
-        description: error
+  const params = useParams();
+  const location = useLocation();
+  const [results, setResults] = React.useState(null);
+  const [argumentText, setArgumentText] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
+  const resultsRef = React.useRef(null);
+
+  const handleSubmit = async (text: string, model: string) => {
+    setArgumentText(text);
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/analyze", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text, model }),
       });
-    } else if (result) {
-      toast({
-        title: "Analysis Complete",
-        description: "Your argument has been successfully analyzed."
-      });
+
+      if (!response.ok) {
+        throw new Error("Failed to analyze argument");
+      }
+
+      const data = await response.json();
+      setResults(data);
+
+      // Scroll to results
+      if (resultsRef.current) {
+        resultsRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle error state here
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="bg-gray-50 font-sans text-gray-800">
-      {/* Welcome Hero Section */}
-      <div className="border-b border-gray-200 mb-8 py-8">
-        <div className="max-w-3xl mx-auto text-center px-4">
-          <div className="inline-flex items-center justify-center p-2 rounded-full mb-4">
-            <LogoSvg />
-          </div>
-          <h1 className="text-3xl font-medium text-gray-900">
-            Logos Argument Analyzer
-          </h1>
-          <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-            Analyze arguments with precision using advanced AI models. Identify logical fallacies, 
-            evaluate premises, and strengthen your critical thinking skills.
-          </p>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Form and History */}
-          <div className="lg:col-span-2 space-y-8">
-            <ArgumentForm 
-              onAnalysisRequested={onAnalysisRequested} 
-              isLoading={loading} 
-            />
-            <HistoryList 
-              onHistoryItemSelected={(item) => {
-                setResult(item.result);
-                setSelectedModel(item.aiModel);
-              }}
-            />
-          </div>
-
-          {/* Right Column - Results and API Guide */}
-          <div className="lg:col-span-1 space-y-8">
-            <ResultsDisplay 
-              result={result} 
-              isLoading={loading} 
-              error={error} 
-              selectedModel={selectedModel} 
-            />
-            <ApiGuide />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-import React from "react";
-import ArgumentForm from "@/components/ArgumentForm";
-import ResultsDisplay from "@/components/ResultsDisplay";
-import HistoryList from "@/components/HistoryList";
-import ApiGuide from "@/components/ApiGuide";
-import Hero from "@/components/Hero";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-export default function Home() {
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
+    <div className="min-h-screen bg-background">
+      <Navbar />
       <Hero />
-      
-      {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left Column - Form */}
-          <div className="lg:col-span-6 space-y-6">
-            <div id="analyze">
-              <ArgumentForm />
-            </div>
-            <HistoryList />
-          </div>
-          
-          {/* Right Column - Results */}
-          <div className="lg:col-span-6 space-y-6">
-            <ResultsDisplay />
-            <ApiGuide />
+      <section className="container mx-auto px-4 py-12">
+        <div className="max-w-4xl mx-auto">
+          <ArgumentForm onSubmit={handleSubmit} isLoading={isLoading} />
+          <div ref={resultsRef}>
+            {results && (
+              <ResultsDisplay results={results} argumentText={argumentText} />
+            )}
           </div>
         </div>
-      </div>
+      </section>
+      <ApiGuide />
+      <Features />
+      <Pricing />
+      <Testimonials />
+      <Faq />
+      <NewsletterSignup />
+      <Footer />
     </div>
   );
 }
