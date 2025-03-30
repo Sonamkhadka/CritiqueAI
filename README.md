@@ -1,65 +1,135 @@
 # Logos Argument Analyzer
 
-Logos Argument Analyzer is a web application that enables users to analyze arguments using powerful AI models. It deconstructs arguments into claims and premises, analyzes emotional tones, and presents the results in a well-formatted report with visualizations.
+A web tool that analyzes the logical structure and emotional tone of user-provided text using multiple AI models (OpenAI, DeepSeek, Gemini).
 
-## Features
+![Logos Argument Analyzer](https://i.imgur.com/your-screenshot-url.png)
 
-- Input text containing an argument
-- Select a preferred AI model (OpenAI, DeepSeek, or Gemini)
-- Trigger analysis by external AI models using the "Logos" persona
-- View AI-generated analysis with visualizations
-- Save, share, download, or print the generated report
-- View history of previous analyses
+## Core Features
 
-## Setup and Installation
+- **Multiple AI Models**: Choose between OpenAI, DeepSeek, and Gemini to analyze your arguments
+- **Claim & Premises Extraction**: Automatically identify the main claim and supporting premises
+- **Fallacy Detection**: Identify logical fallacies in arguments
+- **Emotional Analysis**: Score emotional content across five dimensions (Anger, Sadness, Joy, Fear, Surprise)
+- **Critical Evaluation**: Assess strengths, weaknesses, and unstated assumptions
+- **Local Storage History**: Save your analysis results for future reference
+- **Clean, Modern UI**: Intuitive interface with responsive design
 
-### API Keys Setup (Required)
-
-This application requires API keys for the AI models you wish to use. You need to set these up as Replit Secrets (Environment Variables):
-
-1. **OPENAI_API_KEY**: Get from [OpenAI](https://platform.openai.com/account/api-keys)
-2. **DEEPSEEK_API_KEY**: Get from [DeepSeek](https://platform.deepseek.com)
-3. **GEMINI_API_KEY**: Get from [Google AI Studio](https://ai.google.dev/)
-
-To add these to your Replit Secrets:
-
-1. Open your Replit project
-2. Click on the "Secrets" tab in the Tools panel
-3. Add each API key with the exact variable names shown above
-
-### Running the Application
-
-1. Once the API keys are set up, the application should be ready to use
-2. Click the "Run" button in Replit
-3. The application will start on port 5000
-
-## How to Use
+## How It Works
 
 1. Enter your argument text in the input area
+2. Select your preferred AI model (OpenAI, DeepSeek, or Gemini)
+3. Click "Analyze" to process your text
+4. View the comprehensive analysis results
+
+Behind the scenes:
+- The frontend UI sends the text to the backend
+- The backend forwards it to the selected external AI API with "Logos" persona instructions
+- The AI returns a structured JSON response
+- The application parses and displays the results
+
+Expected JSON structure:
+```json
+{
+  "claim": "Main argument claim",
+  "premises": ["Supporting premise 1", "Supporting premise 2"],
+  "emotions": {
+    "Anger": 0.2,
+    "Sadness": 0.1,
+    "Joy": 0.5,
+    "Fear": 0.3,
+    "Surprise": 0.4
+  },
+  "fallacies": [
+    {
+      "name": "Appeal to Authority",
+      "explanation": "Relying on an authority figure's opinion..."
+    }
+  ],
+  "criticalEvaluation": {
+    "weaknesses": ["Weakness 1", "Weakness 2"],
+    "assumptions": ["Assumption 1", "Assumption 2"],
+    "strength": "Overall argument strength assessment"
+  },
+  "counterArguments": ["Counter argument 1", "Counter argument 2"]
+}
+```
+
+## Technology Stack
+
+- **Frontend**: React with TypeScript
+- **UI Components**: Shadcn UI + Tailwind CSS
+- **Animation**: Framer Motion
+- **Backend**: Node.js with Express
+- **Data Visualization**: Recharts
+- **State Management**: React Hooks
+- **Package Manager**: npm
+
+## Getting Started / Installation
+
+### Prerequisites
+
+- Node.js (v18.0.0 or later)
+- npm or yarn
+- Git
+
+### Installation Steps
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/logos-argument-analyzer.git
+   cd logos-argument-analyzer
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. **API Key Configuration (CRITICAL)**:
+   
+   You **MUST** obtain your own API keys for the AI services:
+   
+   - [OpenAI API Key](https://platform.openai.com/api-keys)
+   - [DeepSeek API Key](https://platform.deepseek.com/)
+   - [Google Gemini API Key](https://ai.google.dev/)
+   
+   Configure them as environment variables (or Replit Secrets if deploying on Replit):
+   ```
+   OPENAI_API_KEY=your_openai_key_here
+   DEEPSEEK_API_KEY=your_deepseek_key_here
+   GEMINI_API_KEY=your_gemini_key_here
+   ```
+   
+   **Note**: The application will not function without these API keys.
+
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+5. Open your browser and navigate to `http://localhost:5000`
+
+## Usage
+
+1. Enter the text you want to analyze in the input field
 2. Select which AI model you want to use (OpenAI, DeepSeek, or Gemini)
-3. Click "Analyze Argument"
-4. View the structured analysis, including:
-   - The main claim identified in your argument
-   - Supporting premises
-   - Emotional tone analysis with visualization
-5. Use the action buttons to share, download, or print your results
-6. Previous analyses are saved automatically and can be accessed from the "Recent Analyses" section
+3. Click the "Analyze" button
+4. View the comprehensive analysis of your argument
+5. Save or revisit previous analyses from the history panel
 
-## Important Notes
+## License
 
-- Using these AI services may incur costs based on your usage. Check each provider's pricing details.
-- The application securely handles API keys through environment variables and never exposes them to the client.
-- Large or complex arguments may take longer to analyze.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Technical Details
+## Contributing
 
-### Technology Stack
+Contributions are welcome! Please check out our [Contributing Guidelines](CONTRIBUTING.md) for details on how to get started.
 
-- Frontend: React, Tailwind CSS, Chart.js
-- Backend: Express.js
-- External APIs: OpenAI, DeepSeek, Google Gemini
+## Code of Conduct
 
-### AI Analysis Instructions
+Please review our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing to the project.
 
-The application sends the following instructions to the selected AI model:
+## Acknowledgments
 
+- Special thanks to all contributors who have helped shape this project
+- Inspired by principles of formal logic and critical thinking
