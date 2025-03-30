@@ -41,6 +41,9 @@ export function Footer() {
             <p className="mt-1">
               This is an educational tool and not a substitute for professional logical analysis.
             </p>
+            <p className="mt-1">
+              <span className="text-blue-500">Privacy-focused:</span> All data is stored locally in your browser - we don't store any user information on servers.
+            </p>
           </div>
         </div>
       </div>

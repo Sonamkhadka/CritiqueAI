@@ -94,10 +94,11 @@ export default function ApiGuide() {
                 <Code className="h-5 w-5 text-blue-500" />
               </div>
               <div>
-                <h3 className="text-sm font-medium text-gray-800">Open Source</h3>
+                <h3 className="text-sm font-medium text-gray-800">Open Source & Privacy-Focused</h3>
                 <p className="text-xs text-gray-600 mt-1">
                   This project is open source and free to use. You can fork, modify, and deploy your own version.
-                  The source code helps educators and students learn about argument analysis through technology.
+                  All analysis history is stored only in your browser's localStorage - we don't collect or store
+                  any user data on servers.
                 </p>
               </div>
             </div>
