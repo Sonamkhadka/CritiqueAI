@@ -93,3 +93,38 @@ export default function Home() {
     </div>
   );
 }
+import React from "react";
+import ArgumentForm from "@/components/ArgumentForm";
+import ResultsDisplay from "@/components/ResultsDisplay";
+import HistoryList from "@/components/HistoryList";
+import ApiGuide from "@/components/ApiGuide";
+import Hero from "@/components/Hero";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+export default function Home() {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <Hero />
+      
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Left Column - Form */}
+          <div className="lg:col-span-6 space-y-6">
+            <div id="analyze">
+              <ArgumentForm />
+            </div>
+            <HistoryList />
+          </div>
+          
+          {/* Right Column - Results */}
+          <div className="lg:col-span-6 space-y-6">
+            <ResultsDisplay />
+            <ApiGuide />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
