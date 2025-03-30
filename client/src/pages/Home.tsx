@@ -1,81 +1,65 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Hero from "@/components/Hero";
-import Navbar from "@/components/Navbar";
 import ApiGuide from "@/components/ApiGuide";
-import Features from "@/components/Features";
-import Footer from "@/components/Footer";
-import Pricing from "@/components/Pricing";
-import Faq from "@/components/Faq";
-import NewsletterSignup from "@/components/NewsletterSignup";
-import Testimonials from "@/components/Testimonials";
 import ArgumentForm from "@/components/ArgumentForm";
 import ResultsDisplay from "@/components/ResultsDisplay";
-import { useParams, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { Footer } from "@/components/Footer"; // Fixed import - using named export
 
 export default function Home() {
-  const params = useParams();
-  const location = useLocation();
-  const [results, setResults] = React.useState(null);
+  const [result, setResult] = React.useState<any>(null);
   const [argumentText, setArgumentText] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
-  const resultsRef = React.useRef(null);
+  const [error, setError] = React.useState<string | null>(null);
+  const [selectedModel, setSelectedModel] = React.useState("openai");
+  const resultsRef = React.useRef<HTMLDivElement>(null);
 
-  const handleSubmit = async (text: string, model: string) => {
-    setArgumentText(text);
-    setIsLoading(true);
-
-    try {
-      const response = await fetch("/api/analyze", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ text, model }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to analyze argument");
-      }
-
-      const data = await response.json();
-      setResults(data);
-
-      // Scroll to results
-      if (resultsRef.current) {
-        resultsRef.current.scrollIntoView({ behavior: "smooth" });
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      // Handle error state here
-    } finally {
-      setIsLoading(false);
+  // Function to handle when analysis is requested
+  const handleAnalysisRequested = (
+    isLoading: boolean,
+    error: string | null,
+    result: any,
+    model: string
+  ) => {
+    setIsLoading(isLoading);
+    setError(error);
+    setResult(result);
+    setSelectedModel(model);
+    
+    // Scroll to results when they're available
+    if (result && resultsRef.current) {
+      resultsRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
       <Hero />
-      <section className="container mx-auto px-4 py-12">
-        <div className="max-w-4xl mx-auto">
-          <ArgumentForm onSubmit={handleSubmit} isLoading={isLoading} />
-          <div ref={resultsRef}>
-            {results && (
-              <ResultsDisplay results={results} argumentText={argumentText} />
-            )}
+      
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex flex-col gap-8 max-w-4xl mx-auto">
+          {/* Analysis Form */}
+          <ArgumentForm 
+            onAnalysisRequested={handleAnalysisRequested}
+            isLoading={isLoading}
+          />
+          
+          {/* Results Display (only shown when results are available) */}
+          <div ref={resultsRef} className="mt-4">
+            <ResultsDisplay
+              result={result}
+              isLoading={isLoading}
+              error={error}
+              selectedModel={selectedModel}
+            />
+          </div>
+          
+          {/* Information Section */}
+          <div className="mt-8">
+            <ApiGuide />
           </div>
         </div>
-      </section>
-      <ApiGuide />
-      <Features />
-      <Pricing />
-      <Testimonials />
-      <Faq />
-      <NewsletterSignup />
-      <Footer />
+      </div>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { HistoryItem } from "@/pages/Home";
+import { HistoryItem } from "@/lib/types";
 import { 
   getHistoryItems, 
   clearHistory,
@@ -142,7 +142,7 @@ export default function HistoryList({ onHistoryItemSelected }: HistoryListProps)
                     <div className="mt-2">
                       <p className="font-semibold">Premises:</p>
                       <ul className="mt-1 ml-2 pl-4 list-disc">
-                        {item.result.premises.map((premise, idx) => (
+                        {item.result.premises.map((premise: string, idx: number) => (
                           <li key={idx}>{premise}</li>
                         ))}
                       </ul>

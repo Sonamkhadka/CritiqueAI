@@ -1,5 +1,5 @@
 import { AnalysisResult } from "@shared/schema";
-import { HistoryItem } from "@/pages/Home";
+import { HistoryItem } from "@/lib/types";
 import { nanoid } from "nanoid";
 
 const HISTORY_KEY = "logosHistory";
