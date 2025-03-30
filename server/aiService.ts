@@ -1,5 +1,6 @@
 import { AnalysisResult } from "@shared/schema";
 import OpenAI from "openai";
+import { GoogleGenAI } from "@google/genai";
 import { z } from "zod";
 
 // Logos AI Persona system prompt
@@ -209,43 +210,31 @@ async function analyzeWithGemini(text: string): Promise<AnalysisResult> {
   }
 
   try {
-    // Using the latest Gemini 1.5 Pro model
-    const response = await fetch("https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-goog-api-key": apiKey
-      },
-      body: JSON.stringify({
-        contents: [
-          {
-            role: "user",
-            parts: [
-              { text: LOGOS_SYSTEM_PROMPT + "\n\nAnalyze the following argument and return JSON:" },
-              { text: text }
-            ]
-          }
-        ],
-        generationConfig: {
-          temperature: 0.2,
-          responseType: "JSON",
-          responseMimeType: "application/json"
-        }
-      })
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(`Gemini API error: ${errorData.error?.message || response.statusText}`);
-    }
-
-    const responseData = await response.json();
-    const content = responseData.candidates?.[0]?.content?.parts?.[0]?.text;
+    // Initialize the Gemini client
+    const genAI = new GoogleGenAI({ apiKey });
     
+    // Combine the system prompt and user text
+    const prompt = `${LOGOS_SYSTEM_PROMPT}\n\nAnalyze the following argument and return JSON format only:\n\n${text}`;
+    
+    // Call the model directly using the models.generateContent method
+    const result = await genAI.models.generateContent({
+      model: "gemini-2.5-pro-exp-03-25",
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      generationConfig: {
+        temperature: 0.2,
+      },
+    });
+    
+    // Extract the response text
+    if (!result || !result.text) {
+      throw new Error("Gemini returned an empty response");
+    }
+    
+    const content = result.text;
     if (!content) {
       throw new Error("Gemini returned an empty response");
     }
-
+    
     // Extract JSON from the response (handle potential text wrapping the JSON)
     const jsonMatch = content.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
@@ -261,7 +250,7 @@ async function analyzeWithGemini(text: string): Promise<AnalysisResult> {
     // Add the specific model info
     return {
       ...validatedData,
-      modelName: "Gemini 1.5 Pro"
+      modelName: "Gemini 2.5 Pro"
     };
   } catch (error) {
     console.error("Gemini analysis error:", error);

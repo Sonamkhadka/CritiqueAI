@@ -94,7 +94,7 @@ export default function ArgumentForm({
               <SelectContent>
                 <SelectItem value="openai">OpenAI (GPT-4o)</SelectItem>
                 <SelectItem value="deepseek">DeepSeek (DeepSeek Chat)</SelectItem>
-                <SelectItem value="gemini">Google (Gemini 1.5 Pro)</SelectItem>
+                <SelectItem value="gemini">Google (Gemini 2.5 Pro)</SelectItem>
               </SelectContent>
             </Select>
             <p className="mt-1 text-xs text-gray-500">
