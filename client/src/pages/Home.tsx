@@ -33,11 +33,11 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       <Hero />
       
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col gap-8 max-w-4xl mx-auto">
+      <div className="container mx-auto px-4 py-6">
+        <div className="flex flex-col gap-6 max-w-4xl mx-auto">
           {/* Analysis Form */}
           <ArgumentForm 
             onAnalysisRequested={handleAnalysisRequested}
@@ -45,7 +45,7 @@ export default function Home() {
           />
           
           {/* Results Display (only shown when results are available) */}
-          <div ref={resultsRef} className="mt-4">
+          <div ref={resultsRef} className="mt-2">
             <ResultsDisplay
               result={result}
               isLoading={isLoading}
@@ -55,11 +55,12 @@ export default function Home() {
           </div>
           
           {/* Information Section */}
-          <div className="mt-8">
+          <div className="mt-6">
             <ApiGuide />
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
