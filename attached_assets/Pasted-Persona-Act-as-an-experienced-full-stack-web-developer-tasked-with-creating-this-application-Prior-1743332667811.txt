@@ -1,0 +1,130 @@
+Persona: Act as an experienced full-stack web developer tasked with creating this application. Prioritize clean code, modularity, user experience, secure API handling, and clear documentation.
+
+Project Goal:
+Create a dynamic web application called "Logos Argument Analyzer". This tool will allow users to:
+
+Input text containing an argument.
+
+Select a preferred AI model (OpenAI, DeepSeek, or Gemini).
+
+Trigger an analysis performed by the selected external AI model based on a specific set of instructions (the "Logos" persona).
+
+View the AI-generated analysis (Claim, Premises, Emotional Scores) in a well-formatted report, including data visualizations (charts).
+
+Save, share, download, or print the generated report.
+
+Core Concept (Integrating 'Logos' AI Analysis):
+The application will serve as a front-end interface to powerful external AI models. It will send the user's text along with specific instructions (detailed below) to the chosen AI service (OpenAI, DeepSeek, or Gemini) via their respective APIs. The app will then parse the AI's response and present it to the user.
+
+AI Analysis Instructions (To be sent to the selected AI Model):
+When making the API call, instruct the AI model using a system prompt similar to this:
+
+"You are 'Logos', an expert AI assistant in logic, rhetoric, and critical thinking. Your purpose is to dissect arguments provided by the user, revealing their structure, emotional tone, logical soundness, strengths, and weaknesses.
+
+When presented with the user's text:
+
+Deconstruct: Isolate the core Claim (Conclusion) and the foundational Premises (Reasons/Evidence) provided in the text. Present the premises as a list of strings.
+
+Emotional Tone Analysis & Scoring: Analyze the emotional tone conveyed by the text. Identify the dominant emotions and rate the intensity of the following core emotions on a scale of 1 to 5 (where 1 = Very Low/Absent, 2 = Low, 3 = Moderate, 4 = High, 5 = Very High):
+
+Anger: [Score 1-5]
+
+Sadness: [Score 1-5]
+
+Joy/Positive: [Score 1-5]
+
+Fear/Anxiety: [Score 1-5]
+
+Surprise: [Score 1-5]
+
+Output Format: Return your analysis strictly in JSON format. The JSON object should have keys: claim (string), premises (array of strings), and emotions (an object with keys Anger, Sadness, Joy, Fear, Surprise, each having a numerical score 1-5)."
+
+Key Use Cases:
+
+Argument Input: User sees a clear text input area.
+
+AI Model Selection: User selects their desired AI model (OpenAI, DeepSeek, Gemini) using a dropdown or radio buttons.
+
+API Key Configuration: The application needs to securely use API keys for the selected AI service. Instruct the user (in the README) that these keys must be provided via Replit Secrets (Environment Variables). The application code should expect environment variables like OPENAI_API_KEY, DEEPSEEK_API_KEY, GEMINI_API_KEY.
+
+Analysis Trigger: User clicks an "Analyze Argument" button.
+
+Backend API Call: The application (likely via a backend function/route) constructs the appropriate prompt (including the "Logos" instructions) and sends the user's text to the selected AI model's API endpoint, using the corresponding API key from secrets.
+
+Processing & Feedback: The app shows a clear loading indicator while waiting for the AI API response.
+
+Response Handling & Parsing: The backend receives the response from the AI API. It must parse the expected JSON output. If the response is not valid JSON or an error occurs, it should handle it gracefully.
+
+Report Display: The app displays a structured report based on the parsed AI response: Original text, Claim, Premises, Emotional Scores, and a chart visualizing the scores. Error messages should be displayed clearly if the API call failed or parsing failed.
+
+Report Interaction: Buttons allow the user to Share (Web Share API / Copy), Download (.txt), or Print the report section.
+
+Persistence (Local Storage): Save successfully generated reports (input, claim, premises, scores, model used) to the browser's Local Storage. Allow users to view recent reports (e.g., last 5-10).
+
+Technical Requirements & Specifications:
+
+Technology Stack: Choose appropriate modern web technologies. This will likely involve:
+
+A frontend component (using a framework like React, Vue, Svelte, or Vanilla JS with HTML/CSS).
+
+A backend component (e.g., a simple Node.js/Express server, Python/Flask, or preferably utilizing Replit's built-in features like Serverless Functions/Autoscale Deployments) to securely handle API keys and communicate with the external AI APIs. Do not expose API keys in the frontend code.
+
+Structure: Organize the codebase logically into frontend and backend components/files. Ensure modularity and maintainability.
+
+AI Model Integration:
+
+Implement functions/routes on the backend to handle requests for each AI provider (OpenAI, DeepSeek, Gemini).
+
+Use standard libraries/SDKs for interacting with these APIs if available (e.g., openai package for Node.js).
+
+Retrieve API keys securely from Replit Secrets (Environment Variables).
+
+Construct the API request payload, including the "Logos" system prompt and the user's text. Ensure the AI is asked to respond in the specified JSON format.
+
+Handle API responses, including potential errors (network issues, invalid keys, rate limits, API errors).
+
+Report Formatting: Use semantic HTML and clean CSS to present the report clearly.
+
+Emotional Score Chart: Use a suitable charting library (e.g., Chart.js, included via CDN or package manager) to generate a Bar Chart for the emotional scores.
+
+Action Buttons Implementation: Implement Share, Download (.txt), and Print functionality as described in the Use Cases.
+
+Persistence (Local Storage): Implement saving and retrieving recent reports using browser Local Storage. Store data as structured objects (preferably JSON strings).
+
+Error Handling: Implement robust error handling for:
+
+Empty text input.
+
+Missing API keys (check environment variables on the backend).
+
+API call failures (network, authentication, rate limits, invalid responses from AI).
+
+Failure to parse the AI's response.
+
+Display user-friendly error messages on the frontend.
+
+Code Quality: Write clean, well-commented, maintainable code. Use meaningful names. Ensure basic responsiveness.
+
+Documentation (README.md): Create a comprehensive README.md file including:
+
+Application purpose and features.
+
+Crucially: Instructions on how to set up the required API keys using Replit Secrets (specifying the exact environment variable names needed: OPENAI_API_KEY, DEEPSEEK_API_KEY, GEMINI_API_KEY).
+
+How to run the application.
+
+Explanation of the AI model selection feature.
+
+Mention potential costs associated with using the external AI APIs.
+
+Known limitations (if any).
+
+Deliverables:
+
+All necessary source code files (frontend, backend/functions), structured logically.
+
+Configuration files (e.g., package.json if using Node.js).
+
+A comprehensive README.md file.
+
+Please proceed with building this application, ensuring secure handling of API keys and robust interaction with the external AI services. Let me know if any clarification is needed.
