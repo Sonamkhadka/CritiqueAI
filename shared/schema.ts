@@ -45,11 +45,30 @@ export interface EmotionScores {
   Surprise: number;
 }
 
+// Definition for a fallacy
+export interface Fallacy {
+  name: string;
+  explanation: string;
+}
+
+// Definition for critical evaluation
+export interface CriticalEvaluation {
+  weaknesses: string[];
+  assumptions: string[];
+  strength: string;
+}
+
 // AI Analysis result format
 export interface AnalysisResult {
   claim: string;
   premises: string[];
   emotions: EmotionScores;
+  emotionJustification?: string;
+  fallacies?: Fallacy[];
+  structureMap?: string;
+  criticalEvaluation?: CriticalEvaluation;
+  counterArguments?: string[];
+  modelName?: string; // To store specific model information (e.g., "GPT-4o")
 }
 
 // Type definitions

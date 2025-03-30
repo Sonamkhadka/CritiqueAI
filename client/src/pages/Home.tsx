@@ -61,25 +61,25 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-gray-50 font-sans text-gray-800 min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <LogoSvg />
-              </div>
-              <h1 className="ml-2 text-xl font-semibold text-gray-900">
-                Logos Argument Analyzer
-              </h1>
-            </div>
+    <div className="bg-gray-50 font-sans text-gray-800">
+      {/* Welcome Hero Section */}
+      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-b border-blue-100 mb-8 py-8">
+        <div className="max-w-3xl mx-auto text-center px-4">
+          <div className="inline-flex items-center justify-center p-2 bg-blue-50 rounded-full mb-4">
+            <LogoSvg />
           </div>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            Logos Argument Analyzer
+          </h1>
+          <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+            Analyze arguments with precision using advanced AI models. Identify logical fallacies, 
+            evaluate premises, and strengthen your critical thinking skills.
+          </p>
         </div>
-      </header>
+      </div>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column - Form and History */}
           <div className="lg:col-span-2 space-y-8">
@@ -106,16 +106,7 @@ export default function Home() {
             <ApiGuide />
           </div>
         </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-white">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-sm text-gray-500">
-            Logos Argument Analyzer • Built with modern web technologies
-          </p>
-        </div>
-      </footer>
+      </div>
     </div>
   );
 }
