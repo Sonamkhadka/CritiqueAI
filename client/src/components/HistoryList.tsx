@@ -10,6 +10,7 @@ import {
 import { ChevronDown, ChevronUp, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { formatDistanceToNow } from "date-fns";
+import { LogoSvg } from "@/components/Logo";
 
 interface HistoryListProps {
   onHistoryItemSelected: (item: HistoryItem) => void;
@@ -78,20 +79,9 @@ export default function HistoryList({ onHistoryItemSelected }: HistoryListProps)
 
         {historyItems.length === 0 ? (
           <div className="py-8 text-center border-2 border-dashed border-gray-200 rounded-lg">
-            <svg
-              className="mx-auto h-12 w-12 text-gray-400"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-              />
-            </svg>
+            <div className="mx-auto h-12 w-12 text-gray-400">
+              <LogoSvg />
+            </div>
             <h3 className="mt-2 text-sm font-medium text-gray-900">
               No analysis history
             </h3>

@@ -1,0 +1,103 @@
+Overall UI/UX Style: Clean, Minimalist, Tool-Oriented
+
+Aesthetic: Modern, clean, functional. Focus on clarity and information hierarchy over heavy decoration. Think Google Workspace, analysis dashboards, or modern developer tools.
+
+Layout: Primarily a single-page application (SPA) feel for seamless interaction. A clear top-to-bottom or potentially a two-column layout on wider screens (input/config on left, output/report on right).
+
+Color Palette: Professional and focused. Use a neutral base (whites, light grays) with a primary accent color (e.g., a calming blue or a deep teal) for interactive elements (buttons, selections, chart highlights). Use subtle secondary colors for status indicators (e.g., light green for success, pale yellow for loading, light red for errors).
+
+Typography: Highly readable sans-serif fonts (like Inter, Lato, Roboto, or Open Sans). Clear distinction between headings, body text, labels, and code/output snippets.
+
+Key Screens / Components & Their UX:
+
+Main Interface (Core Interaction Loop):
+
+Layout:
+
+Wide Screens: Consider a two-column layout. Left column: Input Area, Model Selection, Analyze Button. Right column: Placeholder/Instructions initially, then displays the Analysis Report.
+
+Narrow Screens: A single-column, top-to-bottom flow. Input Area -> Model Selection -> Analyze Button -> Analysis Report (appears below).
+
+Header: Simple bar with the application title "Logos Argument Analyzer". Possibly a subtle logo if desired. Could also house a link/button for "Recent Analyses".
+
+Argument Input Area:
+
+UI: Large, clearly labeled <textarea> element. Takes up significant vertical space.
+
+UX: Placeholder text like "Paste or type your argument here...". Clear visual indication of the active input field. Consider subtle character/word count if helpful, but not essential.
+
+AI Model Selection:
+
+UI: A standard <select> dropdown menu labeled "Choose AI Model:". Options: "OpenAI", "DeepSeek", "Gemini".
+
+UX: Defaults to one option (e.g., OpenAI or the first available one based on detected API keys). Clear visual feedback on the selected option. Consider: If the backend detects a missing API key for a model, that option could be disabled in the dropdown with a tooltip explaining why (e.g., "API Key not configured").
+
+Analysis Trigger:
+
+UI: Prominent, clearly labeled button (e.g., "Analyze Argument"). Uses the primary accent color. Placed logically below the input and model selection.
+
+UX: Button should be disabled if the input text area is empty. Provides clear visual feedback on click (e.g., brief press animation). Changes state during processing (see Loading Feedback).
+
+Loading Feedback:
+
+UI: Replace the "Analyze Argument" button text with "Analyzing..." and add a subtle spinner icon next to it OR display a loading indicator (e.g., a progress bar or spinner) prominently near the report area (or overlaying it slightly).
+
+UX: Provides clear, non-intrusive feedback that the system is working. Prevents duplicate submissions by disabling the button during analysis.
+
+Error Display:
+
+UI: Display error messages in a dedicated, noticeable area (e.g., below the Analyze button or above the report area). Use a distinct background color (light red/orange) and an appropriate icon (e.g., warning sign).
+
+UX: Clearly state the nature of the error (e.g., "API Error: Invalid OpenAI Key", "Analysis Failed: Could not parse AI response", "Network Error"). Provide actionable advice if possible.
+
+Analysis Report Section:
+
+UI: This section appears dynamically after successful analysis. Use clear headings and visual separation for each part. Employ cards or bordered sections for structure.
+
+UX: Information presented logically, following the flow of the AI's analysis.
+
+Components within the Report:
+
+Original Input: Display the user's input text (perhaps in a read-only text area or blockquote) for easy reference. Label: "Original Argument Text".
+
+Model Used: Clearly state which AI model generated this specific report (e.g., "Analysis performed by: OpenAI").
+
+Claim: Display the extracted claim text under a clear heading "Claim:".
+
+Premises: Display the premises as a bulleted or numbered list under the heading "Premises:". Makes them easy to scan.
+
+Emotional Tone Analysis:
+
+Scores: List each emotion (Anger, Sadness, Joy, Fear, Surprise) with its corresponding score (1-5) clearly displayed next to it. Heading: "Emotional Scores (1-5)".
+
+Visualization: Include a simple bar chart visualizing the 5 emotion scores. Use the accent color or distinct, accessible colors for bars. Label axes clearly. Place this chart below or beside the score list. Heading: "Emotion Profile".
+
+Report Interaction Buttons:
+
+UI: A row or small group of icon buttons (with text labels on hover/focus for clarity) associated with the report. Icons for Share, Download, Print.
+
+UX: Clearly associated with the current report. Provide visual feedback on click. Use standard icons users recognize. Download should likely be .txt or potentially .json containing the structured data. Share could trigger the Web Share API or copy a summary/link to clipboard. Print should trigger the browser's print dialog, ideally formatting the report section nicely for print CSS.
+
+Recent Analyses (Local Storage Feature):
+
+Access: A subtle link/button in the header or footer (e.g., "History", "Recent Reports").
+
+UI: Clicking the link could open a modal dialog or a slide-out side panel. This panel lists recent reports (e.g., "Analysis from [Date/Time] using [Model]"). Each item could show a snippet of the input text.
+
+UX: Clicking a list item repopulates the main interface: fills the input area with the old text, selects the correct AI model, and immediately displays the corresponding saved report (fetching it from Local Storage, not re-running the analysis). Provides a clear way to close the history panel/modal. Limit to the last 5-10 as specified. A "Clear History" button might be useful but isn't strictly required by the prompt.
+
+Accessibility & Responsiveness:
+
+Responsiveness: The layout must adapt fluidly to different screen sizes (mobile, tablet, desktop). Single-column layout is crucial for mobile. Ensure touch targets are adequately sized.
+
+Accessibility: Use semantic HTML5 elements (<main>, <section>, <article>, <aside>, <button>, proper heading levels <h1>, <h2>, etc.). Ensure sufficient color contrast. Add ARIA attributes where necessary (e.g., aria-live for loading/error messages). Ensure keyboard navigability and focus indicators. Provide alt text for icons/charts if appropriate (or use ARIA labels).
+
+Rationale Summary:
+
+This UI/UX focuses on clarity, efficiency, and trust.
+
+Clarity: Achieved through minimalist design, clear labeling, logical information flow, and distinct sections.
+
+Efficiency: SPA feel, prominent action buttons, easy model selection, and quick access to results and history minimize user effort.
+
+Trust: Clear feedback (loading, errors, model used), consistent design, and professional appearance build user confidence in the tool.

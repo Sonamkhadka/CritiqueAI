@@ -7,7 +7,7 @@ export function Footer() {
       <div className="container px-4 md:px-6 mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="text-center md:text-left">
-            <h3 className="text-lg font-medium bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <h3 className="text-lg font-medium text-gray-900">
               Logos Argument Analyzer
             </h3>
             <p className="text-sm text-gray-500 mt-1">
@@ -42,7 +42,7 @@ export function Footer() {
               This is an educational tool and not a substitute for professional logical analysis.
             </p>
             <p className="mt-1">
-              <span className="text-blue-500">Privacy-focused:</span> All data is stored locally in your browser - we don't store any user information on servers.
+              <span className="font-medium">Privacy-focused:</span> All data is stored locally in your browser - we don't store any user information on servers.
             </p>
           </div>
         </div>
