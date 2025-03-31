@@ -114,7 +114,7 @@ export default function ArgumentForm({
             {showApiKeyWarning && (
               <p className="mt-1 text-xs text-amber-600">
                 <AlertCircle className="h-3 w-3 inline-block mr-1" />
-                This model requires an API key. Please add it to your Replit Secrets if you want to use it.
+                This model requires an API key. Please add it to your environment variables if you want to use it.
               </p>
             )}
           </div>

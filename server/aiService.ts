@@ -97,7 +97,7 @@ export async function analyzeArgumentWithAI(
 async function analyzeWithOpenAI(text: string): Promise<AnalysisResult> {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
-    throw new Error("OpenAI API key is missing. Please add it to your Replit Secrets.");
+    throw new Error("OpenAI API key is missing. Please add it to your environment variables.");
   }
 
   try {
@@ -151,7 +151,7 @@ async function analyzeWithOpenAI(text: string): Promise<AnalysisResult> {
 async function analyzeWithDeepseek(text: string): Promise<AnalysisResult> {
   const apiKey = process.env.DEEPSEEK_API_KEY;
   if (!apiKey) {
-    throw new Error("DeepSeek API key is missing. Please add it to your Replit Secrets.");
+    throw new Error("DeepSeek API key is missing. Please add it to your environment variables.");
   }
 
   try {
@@ -215,7 +215,7 @@ async function analyzeWithDeepseek(text: string): Promise<AnalysisResult> {
 async function analyzeWithGemini(text: string): Promise<AnalysisResult> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    throw new Error("Gemini API key is missing. Please add it to your Replit Secrets.");
+    throw new Error("Gemini API key is missing. Please add it to your environment variables.");
   }
 
   try {
@@ -289,7 +289,7 @@ async function analyzeWithGemini(text: string): Promise<AnalysisResult> {
 async function analyzeWithOpenRouter(text: string, openRouterModel: OpenRouterModel): Promise<AnalysisResult> {
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
-    throw new Error("OpenRouter API key is missing. Please add it to your Replit Secrets.");
+    throw new Error("OpenRouter API key is missing. Please add it to your environment variables.");
   }
 
   try {
@@ -313,7 +313,7 @@ async function analyzeWithOpenRouter(text: string, openRouterModel: OpenRouterMo
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${apiKey}`,
-        "HTTP-Referer": "https://logos-argument-analyzer.replit.app", // Replace with your actual domain
+        "HTTP-Referer": "https://logos-argument-analyzer.app", // Your domain
         "X-Title": "Logos Argument Analyzer"
       },
       body: JSON.stringify({
