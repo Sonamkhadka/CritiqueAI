@@ -1,6 +1,6 @@
 # Logos Argument Analyzer
 
-A web tool that analyzes the logical structure and emotional tone of argumentative text using state-of-the-art AI models (OpenAI GPT-4o, DeepSeek Chat, and Google Gemini 2.5 Pro).
+A web tool that analyzes the logical structure and emotional tone of argumentative text using state-of-the-art AI models via OpenRouter (free), with options for OpenAI GPT-4o, DeepSeek Chat, and Google Gemini 2.5 Pro when you provide your own API keys.
 
 ## Project Objective
 
@@ -17,24 +17,26 @@ The project strives to make critical reasoning tools accessible to students, edu
 
 ## Core Features
 
-- **Multiple AI Models**: Choose between OpenAI (GPT-4o), DeepSeek (DeepSeek Chat), and Google (Gemini 2.5 Pro) to analyze your arguments
+- **Free Access via OpenRouter**: Access free models from DeepSeek, Google, and OpenAI through OpenRouter
+- **Premium AI Models**: For those who want to use their own API keys, choose between OpenAI (GPT-4o), DeepSeek (DeepSeek Chat), and Google (Gemini 2.5 Pro)
 - **Claim & Premises Extraction**: Automatically identify the main claim and supporting premises
 - **Fallacy Detection**: Identify logical fallacies in arguments
 - **Emotional Analysis**: Score emotional content across five dimensions (Anger, Sadness, Joy, Fear, Surprise)
 - **Critical Evaluation**: Assess strengths, weaknesses, and unstated assumptions
 - **Local Storage History**: Save your analysis results for future reference
 - **Clean, Modern UI**: Intuitive interface with responsive design
+- **Rate Limiting**: 5 requests per minute to ensure fair usage
 
 ## How It Works
 
 1. Enter your argument text in the input area
-2. Select your preferred AI model (OpenAI GPT-4o, DeepSeek Chat, or Google Gemini 2.5 Pro)
+2. Select from OpenRouter's free models or use your own API keys for OpenAI, DeepSeek, or Google
 3. Click "Analyze" to process your text
 4. View the comprehensive analysis results with logical structure, emotional tone, fallacies, and counter-arguments
 
 Behind the scenes:
 - The frontend UI sends the text to the backend
-- The backend forwards it to the selected external AI API with "Logos" persona instructions
+- The backend forwards it to the selected AI API with "Logos" persona instructions
 - The AI returns a structured JSON response
 - The application parses and displays the results
 
@@ -74,9 +76,10 @@ Expected JSON structure:
 - **Data Visualization**: Recharts
 - **State Management**: React Hooks
 - **AI Integration**: 
-  - OpenAI API (GPT-4o - latest model as of March 2025)
-  - DeepSeek API (DeepSeek Chat)
-  - GoogleGenAI (@google/genai - using gemini-2.5-pro-exp-03-25)
+  - OpenRouter API (default, providing free access to various AI models)
+  - OpenAI API (GPT-4o - latest model as of March 2025, requires API key)
+  - DeepSeek API (DeepSeek Chat, requires API key)
+  - GoogleGenAI (@google/genai - using gemini-2.5-pro-exp-03-25, requires API key)
 - **Security**: Custom rate limiting middleware (5 requests per minute)
 - **Package Manager**: npm
 
@@ -101,22 +104,26 @@ Expected JSON structure:
    npm install
    ```
 
-3. **API Key Configuration (CRITICAL)**:
+3. **API Key Configuration**:
    
-   You **MUST** obtain your own API keys for the AI services:
+   The application comes with OpenRouter integration for free access to AI models.
    
-   - [OpenAI API Key](https://platform.openai.com/api-keys)
-   - [DeepSeek API Key](https://platform.deepseek.com/)
-   - [Google Gemini API Key](https://ai.google.dev/)
+   If you want to use premium AI services directly, clone this repository and add the following API keys to your `.env` file:
    
-   Configure them as environment variables (or Replit Secrets if deploying on Replit):
+   - [OpenRouter API Key](https://openrouter.ai/) (included by default)
+   - [OpenAI API Key](https://platform.openai.com/api-keys) (optional, for direct OpenAI access)
+   - [DeepSeek API Key](https://platform.deepseek.com/) (optional, for direct DeepSeek access)
+   - [Google Gemini API Key](https://ai.google.dev/) (optional, for direct Google Gemini access)
+   
+   Configure them in your `.env` file:
    ```
+   OPENROUTER_API_KEY=your_openrouter_key_here
    OPENAI_API_KEY=your_openai_key_here
    DEEPSEEK_API_KEY=your_deepseek_key_here
    GEMINI_API_KEY=your_gemini_key_here
    ```
    
-   **Note**: The application will not function without these API keys.
+   **Note**: At minimum, you need the OPENROUTER_API_KEY for the application to function with the free models.
 
 4. Start the development server:
    ```bash
@@ -128,7 +135,9 @@ Expected JSON structure:
 ## Usage
 
 1. Enter the text you want to analyze in the input field
-2. Select which AI model you want to use (OpenAI GPT-4o, DeepSeek Chat, or Google Gemini 2.5 Pro)
+2. Select which AI provider you want to use:
+   - **OpenRouter** (free, default): Choose from available free models like DeepSeek, Google Gemini, or GPT-4o Mini
+   - **OpenAI, DeepSeek, or Google** (requires your own API key): Direct access to premium models
 3. Click the "Analyze" button
 4. View the comprehensive analysis of your argument with logical structure, emotional analysis, and critical evaluation
 5. Save or revisit previous analyses from the history panel
@@ -151,6 +160,7 @@ Please review our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing to t
 - Special thanks to all contributors who have helped shape this project
 - Inspired by principles of formal logic and critical thinking
 - This project leverages the following AI technologies:
+  - [OpenRouter](https://openrouter.ai/) for free access to various AI models
   - OpenAI's GPT-4o model for advanced natural language processing
   - DeepSeek's AI technologies for comprehensive argument analysis
   - Google's Gemini 2.5 Pro model for intelligent text processing

@@ -4,11 +4,18 @@ Thank you for considering contributing to the Logos Argument Analyzer! This docu
 
 ## Supported AI Models
 
-The application currently supports three AI models:
+The application supports the following AI providers:
 
-1. **OpenAI GPT-4o**: The latest model from OpenAI with enhanced reasoning capabilities
-2. **DeepSeek Chat**: A powerful model from DeepSeek
-3. **Google Gemini 2.5 Pro**: Google's advanced Gemini model (gemini-2.5-pro-exp-03-25)
+1. **OpenRouter** (default, free): Provides access to free models including:
+   - DeepSeek v3 Base
+   - Gemini 2.5 Pro
+   - GPT-4o Mini
+   - And other available free models
+   
+2. **Premium Models** (require your own API keys):
+   - **OpenAI GPT-4o**: The latest model from OpenAI with enhanced reasoning capabilities
+   - **DeepSeek Chat**: A powerful model from DeepSeek
+   - **Google Gemini 2.5 Pro**: Google's advanced Gemini model (gemini-2.5-pro-exp-03-25)
 
 ## Code of Conduct
 
@@ -68,9 +75,10 @@ We welcome feature suggestions! To suggest a feature:
 2. Clone your fork locally
 3. Install dependencies with `npm install`
 4. **Important**: Setup API keys as described in the [README](README.md)
-   - OPENAI_API_KEY (for GPT-4o access)
-   - DEEPSEEK_API_KEY (for DeepSeek Chat access)
-   - GEMINI_API_KEY (for Gemini 2.5 Pro access)
+   - OPENROUTER_API_KEY (required for basic functionality)
+   - OPENAI_API_KEY (optional, for direct GPT-4o access)
+   - DEEPSEEK_API_KEY (optional, for direct DeepSeek Chat access)
+   - GEMINI_API_KEY (optional, for direct Gemini 2.5 Pro access)
 5. Run the development server with `npm run dev`
 6. Note: The application implements rate limiting (5 requests per minute)
 
