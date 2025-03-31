@@ -1,10 +1,10 @@
-# Logos Argument Analyzer
+# Critique AI
 
 A web tool that analyzes the logical structure and emotional tone of argumentative text using state-of-the-art AI models via OpenRouter (free), with options for OpenAI GPT-4o, DeepSeek Chat, and Google Gemini 2.5 Pro when you provide your own API keys.
 
 ## Project Objective
 
-Logos aims to democratize access to advanced argument analysis techniques through AI. By breaking down the components of logical argumentation (claims, premises, fallacies) and providing insights on emotional tone and critical evaluation, Logos helps users:
+Critique AI aims to democratize access to advanced argument analysis techniques through AI. By breaking down the components of logical argumentation (claims, premises, fallacies) and providing insights on emotional tone and critical evaluation, Critique helps users:
 
 - Better understand the structure and quality of arguments
 - Identify logical fallacies and weaknesses in reasoning
@@ -13,7 +13,7 @@ Logos aims to democratize access to advanced argument analysis techniques throug
 
 The project strives to make critical reasoning tools accessible to students, educators, writers, and anyone engaged in persuasive communication.
 
-![Logos - Your AI-Powered Argument Analyzer](https://i.imgur.com/logos-screenshot.png)
+![Critique AI - Your AI-Powered Argument Analyzer](https://i.imgur.com/logos-screenshot.png)
 
 ## Core Features
 

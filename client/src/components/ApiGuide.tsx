@@ -84,9 +84,9 @@ export default function ApiGuide() {
                 </div>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-gray-800">What is Logos?</h3>
+                <h3 className="text-sm font-medium text-gray-800">What is Critique?</h3>
                 <p className="text-xs text-gray-600 mt-1">
-                  Logos Argument Analyzer is an open-source tool that uses AI to break down the structure
+                  Critique AI is an open-source tool that uses AI to break down the structure
                   of arguments and identify logical fallacies, helping users improve their critical thinking skills.
                 </p>
               </div>
