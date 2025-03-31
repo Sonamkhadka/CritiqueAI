@@ -1,4 +1,4 @@
-import { AnalysisResult } from "@shared/schema";
+import { AnalysisResult, OpenRouterModel } from "@shared/schema";
 import OpenAI from "openai";
 import { GoogleGenAI } from "@google/genai";
 import { z } from "zod";
@@ -59,16 +59,20 @@ const aiResponseSchema = z.object({
   counterArguments: z.array(z.string()).optional()
 });
 
+
+
 /**
  * Analyze an argument using the specified AI service
  * 
  * @param text The argument text to analyze
- * @param model The AI model to use (openai, deepseek, or gemini)
+ * @param model The AI model to use (openai, deepseek, gemini, or openrouter)
+ * @param openRouterModel Optional parameter for specifying which OpenRouter model to use
  * @returns The analysis result
  */
 export async function analyzeArgumentWithAI(
   text: string,
-  model: "openai" | "deepseek" | "gemini"
+  model: "openai" | "deepseek" | "gemini" | "openrouter",
+  openRouterModel?: OpenRouterModel
 ): Promise<AnalysisResult> {
   switch (model) {
     case "openai":
@@ -77,6 +81,11 @@ export async function analyzeArgumentWithAI(
       return await analyzeWithDeepseek(text);
     case "gemini":
       return await analyzeWithGemini(text);
+    case "openrouter":
+      if (!openRouterModel) {
+        throw new Error("OpenRouter model must be specified");
+      }
+      return await analyzeWithOpenRouter(text, openRouterModel);
     default:
       throw new Error(`Unsupported AI model: ${model}`);
   }
@@ -268,6 +277,87 @@ async function analyzeWithGemini(text: string): Promise<AnalysisResult> {
 
     if (error instanceof SyntaxError) {
       throw new Error("Failed to parse JSON response from Gemini. Please try again.");
+    }
+
+    throw error;
+  }
+}
+
+/**
+ * Analyze an argument using OpenRouter API with specified model
+ */
+async function analyzeWithOpenRouter(text: string, openRouterModel: OpenRouterModel): Promise<AnalysisResult> {
+  const apiKey = process.env.OPENROUTER_API_KEY;
+  if (!apiKey) {
+    throw new Error("OpenRouter API key is missing. Please add it to your Replit Secrets.");
+  }
+
+  try {
+    // Prepare friendly model name for display
+    let friendlyModelName = openRouterModel.split('/').pop()?.replace(':free', '') || openRouterModel;
+    
+    // Handle special cases for display name
+    if (openRouterModel === "deepseek/deepseek-v3-base:free") {
+      friendlyModelName = "DeepSeek v3 Base";
+    } else if (openRouterModel === "google/gemini-2.5-pro-exp-03-25:free") {
+      friendlyModelName = "Gemini 2.5 Pro";
+    } else if (openRouterModel === "deepseek/deepseek-r1-zero:free") {
+      friendlyModelName = "DeepSeek R1 Zero";
+    } else if (openRouterModel === "openai/gpt-4o-mini") {
+      friendlyModelName = "GPT-4o Mini";
+    }
+
+    // Call the OpenRouter API
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`,
+        "HTTP-Referer": "https://logos-argument-analyzer.replit.app", // Replace with your actual domain
+        "X-Title": "Logos Argument Analyzer"
+      },
+      body: JSON.stringify({
+        model: openRouterModel,
+        messages: [
+          { role: "system", content: LOGOS_SYSTEM_PROMPT },
+          { role: "user", content: text }
+        ],
+        response_format: { type: "json_object" }
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`OpenRouter API error: ${errorData.error?.message || response.statusText}`);
+    }
+
+    const responseData = await response.json();
+    const content = responseData.choices?.[0]?.message?.content;
+    
+    if (!content) {
+      throw new Error("OpenRouter returned an empty response");
+    }
+
+    // Parse the JSON response
+    const parsedData = JSON.parse(content);
+    
+    // Validate the response structure
+    const validatedData = aiResponseSchema.parse(parsedData);
+    
+    // Add the specific model info
+    return {
+      ...validatedData,
+      modelName: friendlyModelName
+    };
+  } catch (error) {
+    console.error("OpenRouter analysis error:", error);
+
+    if (error instanceof z.ZodError) {
+      throw new Error("Invalid response format from OpenRouter. Please try again.");
+    }
+
+    if (error instanceof SyntaxError) {
+      throw new Error("Failed to parse JSON response from OpenRouter. Please try again.");
     }
 
     throw error;

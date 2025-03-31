@@ -39,10 +39,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       // Validate the request body
       const validatedData = analysisRequestSchema.parse(req.body);
-      const { text, model } = validatedData;
+      const { text, model, openRouterModel } = validatedData;
 
       // Perform the analysis with the selected AI model
-      const result = await analyzeArgumentWithAI(text, model);
+      const result = await analyzeArgumentWithAI(text, model, openRouterModel);
 
       // Return the analysis result
       res.json(result);

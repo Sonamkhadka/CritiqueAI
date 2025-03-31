@@ -75,10 +75,21 @@ export interface AnalysisResult {
 export type InsertAnalysisReport = z.infer<typeof insertAnalysisReportSchema>;
 export type AnalysisReport = typeof analysisReports.$inferSelect;
 
+// OpenRouter free model options
+export const openRouterModels = [
+  "deepseek/deepseek-v3-base:free",
+  "google/gemini-2.5-pro-exp-03-25:free",
+  "deepseek/deepseek-r1-zero:free",
+  "openai/gpt-4o-mini"
+] as const;
+
+export type OpenRouterModel = typeof openRouterModels[number];
+
 // Schema for the analysis request
 export const analysisRequestSchema = z.object({
   text: z.string().min(1, "Argument text is required"),
-  model: z.enum(["openai", "deepseek", "gemini"])
+  model: z.enum(["openai", "deepseek", "gemini", "openrouter"]),
+  openRouterModel: z.enum(openRouterModels).optional()
 });
 
 export type AnalysisRequest = z.infer<typeof analysisRequestSchema>;
