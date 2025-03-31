@@ -11,7 +11,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, Loader2 } from "lucide-react";
+import { AlertCircle, Loader2, Info as InfoIcon } from "lucide-react";
 import { AnalysisResult, OpenRouterModel, openRouterModels } from "@shared/schema";
 import { analyzeArgument } from "@/lib/api";
 import { LogoSvg } from "@/components/Logo";
@@ -154,7 +154,7 @@ export default function ArgumentForm({
                 </SelectContent>
               </Select>
               <p className="mt-1 text-xs text-gray-500">
-                These models are accessible through OpenRouter's free tier.
+                These models are accessible through OpenRouter's free tier.  Please be aware that performance may vary due to OpenRouter's infrastructure. We appreciate your patience.
               </p>
             </div>
           )}
