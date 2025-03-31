@@ -321,8 +321,7 @@ async function analyzeWithOpenRouter(text: string, openRouterModel: OpenRouterMo
         messages: [
           { role: "system", content: LOGOS_SYSTEM_PROMPT },
           { role: "user", content: text }
-        ],
-        response_format: { type: "json_object" }
+        ]
       })
     });
 
@@ -334,9 +333,22 @@ async function analyzeWithOpenRouter(text: string, openRouterModel: OpenRouterMo
     const responseData = await response.json();
     const content = responseData.choices?.[0]?.message?.content;
 
-    if (!content) {
-      throw new Error("OpenRouter returned an empty response");
+    // Debug information
+    console.log("OpenRouter response status:", response.status);
+    
+    if (!response.ok) {
+      const responseText = await response.text();
+      console.log("OpenRouter error response:", responseText);
+      throw new Error(`OpenRouter API returned status ${response.status}: ${responseText}`);
     }
+    
+    if (!content) {
+      console.log("Full OpenRouter response:", await response.text());
+      throw new Error("OpenRouter returned an empty response content");
+    }
+    
+    // Debug the content
+    console.log("OpenRouter content preview:", content.substring(0, 200));
 
     // Parse the JSON response with better error handling
     let parsedData;
@@ -356,6 +368,7 @@ async function analyzeWithOpenRouter(text: string, openRouterModel: OpenRouterMo
       }
     } catch (parseError) {
       console.error("JSON parsing error:", parseError);
+      console.log("Problematic content:", content);
       throw new SyntaxError(`Failed to parse OpenRouter response: ${parseError.message}`);
     }
 
