@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -18,7 +17,7 @@ interface Particle {
 export default function Hero() {
   // State for particles
   const [particles, setParticles] = useState<Particle[]>([]);
-  
+
   // Generate particles on component mount
   useEffect(() => {
     const generateParticles = () => {
@@ -67,21 +66,21 @@ export default function Hero() {
   };
 
   return (
-    <motion.section 
-      className="relative overflow-hidden bg-white py-6"
+    <motion.section
+      className="relative overflow-hidden bg-white dark:bg-gray-900 py-6" // Added dark mode background
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
       {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white to-blue-50 opacity-30"></div>
-      
+      <div className="absolute inset-0 bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800 opacity-30"></div>
+
       {/* Moving particles background */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         {particles.map(particle => (
           <motion.div
             key={particle.id}
-            className="absolute rounded-full bg-primary/10"
+            className="absolute rounded-full bg-primary/10 dark:bg-primary/20" //Adjusted for dark mode
             style={{
               left: `${particle.x}%`,
               top: `${particle.y}%`,
@@ -103,11 +102,11 @@ export default function Hero() {
             }}
           />
         ))}
-        
+
         {/* Larger floating elements for additional motion */}
-        <motion.div 
-          className="absolute w-32 h-32 rounded-full bg-primary/5 top-10 left-1/4 blur-xl"
-          animate={{ 
+        <motion.div
+          className="absolute w-32 h-32 rounded-full bg-primary/5 dark:bg-primary/10 top-10 left-1/4 blur-xl" //Adjusted for dark mode
+          animate={{
             y: [0, -8, 0],
             transition: {
               duration: 6,
@@ -118,9 +117,9 @@ export default function Hero() {
           }}
           initial={{ opacity: 0.5 }}
         />
-        <motion.div 
-          className="absolute w-48 h-48 rounded-full bg-primary/5 bottom-10 right-1/4 blur-xl"
-          animate={{ 
+        <motion.div
+          className="absolute w-48 h-48 rounded-full bg-primary/5 dark:bg-primary/10 bottom-10 right-1/4 blur-xl" //Adjusted for dark mode
+          animate={{
             x: [0, 8, 0],
             transition: {
               duration: 7,
@@ -131,9 +130,9 @@ export default function Hero() {
           }}
           initial={{ opacity: 0.5 }}
         />
-        <motion.div 
-          className="absolute w-24 h-24 rounded-full bg-secondary/5 top-1/2 left-1/3 blur-xl"
-          animate={{ 
+        <motion.div
+          className="absolute w-24 h-24 rounded-full bg-secondary/5 dark:bg-secondary/10 top-1/2 left-1/3 blur-xl" //Adjusted for dark mode
+          animate={{
             scale: [1, 1.03, 1],
             opacity: [0.6, 0.8, 0.6],
             transition: {
@@ -149,25 +148,25 @@ export default function Hero() {
 
       <div className="container relative z-10 mx-auto px-4">
         <motion.div className="flex flex-col items-center text-center">
-          <motion.div 
-            variants={itemVariants} 
-            className="mb-2 inline-block rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary"
-            whileHover={{ 
+          <motion.div
+            variants={itemVariants}
+            className="mb-2 inline-block rounded-full bg-primary/10 dark:bg-primary/20 px-3 py-1 text-sm font-medium text-primary dark:text-gray-100" //Dark mode text color
+            whileHover={{
               scale: 1.03,
               transition: { duration: 0.2 }
             }}
           >
             Introducing Critique
           </motion.div>
-          
-          <motion.h1 
+
+          <motion.h1
             variants={itemVariants}
-            className="max-w-4xl text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl mb-2"
+            className="max-w-4xl text-2xl font-bold tracking-tight text-foreground dark:text-gray-100 sm:text-3xl md:text-4xl mb-2" //Dark mode text color
           >
             Analyze Arguments with{" "}
-            <motion.span 
-              className="text-primary bg-clip-text"
-              animate={{ 
+            <motion.span
+              className="text-primary dark:text-gray-100 bg-clip-text" //Dark mode text color
+              animate={{
                 opacity: [0.9, 1, 0.9],
                 scale: [1, 1.01, 1],
                 transition: {
@@ -181,16 +180,16 @@ export default function Hero() {
               AI-Powered Analysis
             </motion.span>
           </motion.h1>
-          
-          <motion.p 
+
+          <motion.p
             variants={itemVariants}
-            className="max-w-xl text-sm text-muted-foreground mb-3"
+            className="max-w-xl text-sm text-muted-foreground dark:text-gray-400 mb-3" //Dark mode text color
           >
             Identify logical fallacies, evaluate premises, and strengthen your critical thinking with AI.
           </motion.p>
-          
-          <motion.div 
-            variants={itemVariants} 
+
+          <motion.div
+            variants={itemVariants}
             className="flex flex-row gap-3 justify-center"
           >
             <motion.div
@@ -201,13 +200,13 @@ export default function Hero() {
               <Button size="sm" className="px-3 shadow-sm">
                 Get Started
                 <motion.div
-                  animate={{ 
+                  animate={{
                     x: [0, 4, 0],
-                    transition: { 
-                      duration: 2, 
-                      repeat: Infinity, 
+                    transition: {
+                      duration: 2,
+                      repeat: Infinity,
                       repeatType: "mirror",
-                      ease: "easeInOut" 
+                      ease: "easeInOut"
                     }
                   }}
                 >
