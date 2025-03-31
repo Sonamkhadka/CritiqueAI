@@ -121,10 +121,10 @@ async function analyzeWithOpenAI(text: string): Promise<AnalysisResult> {
 
     // Parse the JSON response
     const parsedData = JSON.parse(content);
-    
+
     // Validate the response structure
     const validatedData = aiResponseSchema.parse(parsedData);
-    
+
     // Add the specific model info
     return {
       ...validatedData,
@@ -178,17 +178,17 @@ async function analyzeWithDeepseek(text: string): Promise<AnalysisResult> {
 
     const responseData = await response.json();
     const content = responseData.choices?.[0]?.message?.content;
-    
+
     if (!content) {
       throw new Error("DeepSeek returned an empty response");
     }
 
     // Parse the JSON response
     const parsedData = JSON.parse(content);
-    
+
     // Validate the response structure
     const validatedData = aiResponseSchema.parse(parsedData);
-    
+
     // Add the specific model info
     return {
       ...validatedData,
@@ -246,7 +246,7 @@ async function analyzeWithGemini(text: string): Promise<AnalysisResult> {
 
     const responseData = await response.json();
     const content = responseData.candidates?.[0]?.content?.parts?.[0]?.text;
-    
+
     if (!content) {
       throw new Error("Gemini returned an empty response");
     }
@@ -259,10 +259,10 @@ async function analyzeWithGemini(text: string): Promise<AnalysisResult> {
 
     // Parse the JSON response
     const parsedData = JSON.parse(jsonMatch[0]);
-    
+
     // Validate the response structure
     const validatedData = aiResponseSchema.parse(parsedData);
-    
+
     // Add the specific model info
     return {
       ...validatedData,
@@ -295,7 +295,7 @@ async function analyzeWithOpenRouter(text: string, openRouterModel: OpenRouterMo
   try {
     // Prepare friendly model name for display
     let friendlyModelName = openRouterModel.split('/').pop()?.replace(':free', '') || openRouterModel;
-    
+
     // Handle special cases for display name
     if (openRouterModel === "deepseek/deepseek-v3-base:free") {
       friendlyModelName = "DeepSeek v3 Base";
@@ -333,17 +333,35 @@ async function analyzeWithOpenRouter(text: string, openRouterModel: OpenRouterMo
 
     const responseData = await response.json();
     const content = responseData.choices?.[0]?.message?.content;
-    
+
     if (!content) {
       throw new Error("OpenRouter returned an empty response");
     }
 
-    // Parse the JSON response
-    const parsedData = JSON.parse(content);
-    
+    // Parse the JSON response with better error handling
+    let parsedData;
+    try {
+      // Check if response contains non-English characters that might indicate an error
+      if (content.match(/[^\x00-\x7F]/)) {
+        console.log("Non-ASCII characters detected in OpenRouter response:", content.substring(0, 100));
+        throw new Error("Response contains non-English characters, likely not valid JSON");
+      }
+
+      // Try to extract JSON if it's wrapped in other text
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        parsedData = JSON.parse(jsonMatch[0]);
+      } else {
+        parsedData = JSON.parse(content);
+      }
+    } catch (parseError) {
+      console.error("JSON parsing error:", parseError);
+      throw new SyntaxError(`Failed to parse OpenRouter response: ${parseError.message}`);
+    }
+
     // Validate the response structure
     const validatedData = aiResponseSchema.parse(parsedData);
-    
+
     // Add the specific model info
     return {
       ...validatedData,

@@ -65,9 +65,23 @@ export default function ArgumentForm({
       }
       onAnalysisRequested(false, null, result, model);
     } catch (error) {
-      const message = error instanceof Error ? error.message : "An unknown error occurred";
-      setLocalError(message);
-      onAnalysisRequested(false, message, null, model);
+      console.error("Error analyzing argument:", error);
+
+      // Provide a more user-friendly error message
+      let errorMessage = "An error occurred while analyzing your argument.";
+
+      if (error instanceof Error) {
+        if (error.message.includes("parse JSON") || error.message.includes("JSON response")) {
+          errorMessage = "The AI model returned an invalid response. Please try using a different model or simplify your argument text.";
+        } else if (error.message.includes("Rate limit")) {
+          errorMessage = "You've reached the rate limit. Please wait a moment before trying again.";
+        } else {
+          errorMessage = error.message;
+        }
+      }
+
+      setLocalError(errorMessage);
+      onAnalysisRequested(false, errorMessage, null, model);
     }
   };
 
@@ -118,7 +132,7 @@ export default function ArgumentForm({
               </p>
             )}
           </div>
-          
+
           {model === "openrouter" && (
             <div className="mb-6">
               <Label htmlFor="openRouterModel" className="mb-1">
@@ -144,7 +158,7 @@ export default function ArgumentForm({
               </p>
             </div>
           )}
-          
+
           {localError && (
             <Alert variant="destructive" className="mb-4">
               <AlertCircle className="h-4 w-4" />
