@@ -2,6 +2,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { AlertTriangle, Info, Lock, Brain, Code } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LogoSvg } from "@/components/Logo";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { InfoIcon } from "@heroicons/react/24/solid";
+
 
 export default function ApiGuide() {
   return (
@@ -12,20 +16,20 @@ export default function ApiGuide() {
           Learn about the AI models and how to use this tool effectively
         </CardDescription>
       </CardHeader>
-      
+
       <Tabs defaultValue="setup" className="w-full">
         <TabsList className="w-full grid grid-cols-3">
           <TabsTrigger value="setup">API Setup</TabsTrigger>
           <TabsTrigger value="about">About Critique</TabsTrigger>
           <TabsTrigger value="tips">Analysis Tips</TabsTrigger>
         </TabsList>
-        
+
         <TabsContent value="setup" className="p-4">
           <div className="space-y-4">
             <p className="text-sm text-gray-600">
               To use all AI models in the Critique AI, you'll need these API keys:
             </p>
-            
+
             <ul className="space-y-3 text-sm">
               <li className="flex items-start border border-gray-200 rounded-md p-3">
                 <div className="p-2 rounded-md mr-3">
@@ -41,7 +45,7 @@ export default function ApiGuide() {
                   </p>
                 </div>
               </li>
-              
+
               <li className="flex items-start border border-gray-200 rounded-md p-3">
                 <div className="p-2 rounded-md mr-3">
                   <Lock className="h-4 w-4 text-gray-600" />
@@ -56,7 +60,7 @@ export default function ApiGuide() {
                   </p>
                 </div>
               </li>
-              
+
               <li className="flex items-start border border-gray-200 rounded-md p-3">
                 <div className="p-2 rounded-md mr-3">
                   <Lock className="h-4 w-4 text-gray-600" />
@@ -67,14 +71,28 @@ export default function ApiGuide() {
                     For Gemini Pro analysis. Get from{" "}
                     <a href="https://ai.google.dev/" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
                       Google AI Studio
-                    </a>
+                    </a> (optional)
                   </p>
                 </div>
               </li>
             </ul>
+            <Alert className="mt-4">
+                <InfoIcon className="h-4 w-4" />
+                <AlertTitle>About OpenRouter Models</AlertTitle>
+                <AlertDescription className="text-xs">
+                  These models are accessible through OpenRouter's free tier. Please be aware that performance may vary due to OpenRouter's infrastructure. We appreciate your patience if response times are slower than expected.
+                </AlertDescription>
+              </Alert>
+
+            <div className="mt-4 flex items-start gap-2 text-xs text-gray-500">
+                <ExclamationTriangleIcon className="h-4 w-4 flex-shrink-0 text-amber-500" />
+                <p>
+                  Using these AI services may incur costs based on your usage. Check each provider's pricing details before extensive use.
+                </p>
+              </div>
           </div>
         </TabsContent>
-        
+
         <TabsContent value="about" className="p-4">
           <div className="space-y-4">
             <div className="flex items-start">
@@ -91,7 +109,7 @@ export default function ApiGuide() {
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-start">
               <div className="p-2 rounded-full mr-3">
                 <Code className="h-5 w-5 text-gray-600" />
@@ -107,11 +125,11 @@ export default function ApiGuide() {
             </div>
           </div>
         </TabsContent>
-        
+
         <TabsContent value="tips" className="p-4">
           <div className="space-y-3">
             <p className="text-sm text-gray-700">For best analysis results:</p>
-            
+
             <ul className="space-y-2 text-xs text-gray-600 list-disc pl-5">
               <li>Provide complete arguments with clear claims and premises</li>
               <li>Include the context of the argument when relevant</li>
@@ -119,7 +137,7 @@ export default function ApiGuide() {
               <li>Compare results from different AI models for a more comprehensive analysis</li>
               <li>Use the history feature to track how your arguments evolve over time</li>
             </ul>
-            
+
             <div className="border border-gray-200 rounded-md p-3 mt-3">
               <div className="flex">
                 <div className="flex-shrink-0">
@@ -135,7 +153,7 @@ export default function ApiGuide() {
           </div>
         </TabsContent>
       </Tabs>
-      
+
       <CardFooter className="border-t border-gray-100 p-3">
         <div className="flex items-start w-full">
           <AlertTriangle className="h-4 w-4 text-gray-500 mr-2 mt-0.5 flex-shrink-0" />
