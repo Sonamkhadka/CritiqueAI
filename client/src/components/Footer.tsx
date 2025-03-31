@@ -14,11 +14,8 @@ export function Footer() {
               Critical analysis of arguments using AI for logical evaluation
             </p>
           </div>
-          
+
           <div className="flex flex-col items-center md:items-end space-y-2">
-            <div className="text-sm text-gray-500 dark:text-gray-400">
-              Powered by OpenAI, DeepSeek, and Google Gemini
-            </div>
             <div className="flex items-center space-x-4">
               <a
                 href="https://github.com/Sonamkhadka/Argument-Analyzer.git"
@@ -31,7 +28,7 @@ export function Footer() {
             </div>
           </div>
         </div>
-        
+
         <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-800">
           <div className="text-center text-xs text-gray-500 dark:text-gray-400">
             <p>
