@@ -157,7 +157,7 @@ export default function Hero() {
               transition: { duration: 0.2 }
             }}
           >
-            Introducing Logos
+            Introducing Critique
           </motion.div>
           
           <motion.h1 
@@ -178,7 +178,7 @@ export default function Hero() {
                 }
               }}
             >
-              AI-Powered Logic
+              AI-Powered Analysis
             </motion.span>
           </motion.h1>
           

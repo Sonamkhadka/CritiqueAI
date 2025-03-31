@@ -16,14 +16,14 @@ export default function ApiGuide() {
       <Tabs defaultValue="setup" className="w-full">
         <TabsList className="w-full grid grid-cols-3">
           <TabsTrigger value="setup">API Setup</TabsTrigger>
-          <TabsTrigger value="about">About Logos</TabsTrigger>
+          <TabsTrigger value="about">About Critique</TabsTrigger>
           <TabsTrigger value="tips">Analysis Tips</TabsTrigger>
         </TabsList>
         
         <TabsContent value="setup" className="p-4">
           <div className="space-y-4">
             <p className="text-sm text-gray-600">
-              To use all AI models in the Logos Argument Analyzer, you'll need these API keys:
+              To use all AI models in the Critique AI, you'll need these API keys:
             </p>
             
             <ul className="space-y-3 text-sm">

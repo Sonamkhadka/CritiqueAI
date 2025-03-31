@@ -2,7 +2,7 @@ import { AnalysisResult } from "@shared/schema";
 import { HistoryItem } from "@/lib/types";
 import { nanoid } from "nanoid";
 
-const HISTORY_KEY = "logosHistory";
+const HISTORY_KEY = "critiqueHistory";
 const MAX_HISTORY_ITEMS = 10;
 
 /**
