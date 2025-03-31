@@ -154,9 +154,9 @@ export default function ApiGuide() {
 
       <CardFooter className="border-t border-gray-100 p-3">
         <div className="flex items-start w-full">
-          <AlertTriangle className="h-4 w-4 text-gray-500 mr-2 mt-0.5 flex-shrink-0" />
+          <Info className="h-4 w-4 text-gray-500 mr-2 mt-0.5 flex-shrink-0" />
           <p className="text-xs text-gray-600">
-            Using these AI services may incur costs based on your usage. Check each provider's pricing details before extensive use.
+            Save your analyses in the history panel for future reference.
           </p>
         </div>
       </CardFooter>
