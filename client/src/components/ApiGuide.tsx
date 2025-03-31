@@ -78,7 +78,7 @@ export default function ApiGuide() {
                 <Info className="h-4 w-4" />
                 <AlertTitle>About OpenRouter Models</AlertTitle>
                 <AlertDescription className="text-xs">
-                  These models are accessible through OpenRouter's free tier. Please be aware that performance may vary due to OpenRouter's infrastructure. We appreciate your patience if response times are slower than expected.
+                  These models are accessible through <a href="https://openrouter.ai/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">OpenRouter's</a> free tier. Please be aware that performance may vary due to OpenRouter's infrastructure. We appreciate your patience if response times are slower than expected.
                 </AlertDescription>
               </Alert>
 

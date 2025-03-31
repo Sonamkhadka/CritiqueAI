@@ -112,7 +112,16 @@ export default function HistoryList({ onHistoryItemSelected }: HistoryListProps)
                     <Button 
                       variant="ghost" 
                       size="sm" 
-                      className="h-6 w-6 p-0 rounded-full"
+                      className="h-6 w-6 p-0 ml-1 rounded-full text-gray-500 hover:text-red-500"
+                      onClick={(e) => handleRemoveItem(item.id, e)}
+                      title="Delete"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="h-6 w-6 p-0 ml-1 rounded-full"
                       onClick={(e) => {
                         e.stopPropagation();
                         toggleExpanded(item.id);
@@ -121,14 +130,6 @@ export default function HistoryList({ onHistoryItemSelected }: HistoryListProps)
                       {expandedItems.has(item.id) 
                         ? <ChevronUp className="h-4 w-4 text-gray-500" /> 
                         : <ChevronDown className="h-4 w-4 text-gray-500" />}
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className="h-6 w-6 p-0 ml-1 rounded-full"
-                      onClick={(e) => handleRemoveItem(item.id, e)}
-                    >
-                      <X className="h-4 w-4 text-gray-500" />
                     </Button>
                   </div>
                 </div>
