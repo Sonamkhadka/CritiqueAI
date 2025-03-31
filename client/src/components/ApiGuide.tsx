@@ -1,10 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
-import { AlertTriangle, Info, Lock, Brain, Code } from "lucide-react";
+import { AlertTriangle, Info, Lock, Brain, Code, AlertCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LogoSvg } from "@/components/Logo";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
-import { InfoIcon } from "@heroicons/react/24/solid";
 
 
 export default function ApiGuide() {
@@ -77,7 +75,7 @@ export default function ApiGuide() {
               </li>
             </ul>
             <Alert className="mt-4">
-                <InfoIcon className="h-4 w-4" />
+                <Info className="h-4 w-4" />
                 <AlertTitle>About OpenRouter Models</AlertTitle>
                 <AlertDescription className="text-xs">
                   These models are accessible through OpenRouter's free tier. Please be aware that performance may vary due to OpenRouter's infrastructure. We appreciate your patience if response times are slower than expected.
@@ -85,7 +83,7 @@ export default function ApiGuide() {
               </Alert>
 
             <div className="mt-4 flex items-start gap-2 text-xs text-gray-500">
-                <ExclamationTriangleIcon className="h-4 w-4 flex-shrink-0 text-amber-500" />
+                <AlertTriangle className="h-4 w-4 flex-shrink-0 text-amber-500" />
                 <p>
                   Using these AI services may incur costs based on your usage. Check each provider's pricing details before extensive use.
                 </p>
