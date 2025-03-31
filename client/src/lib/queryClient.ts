@@ -4,9 +4,12 @@ async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
     let errorMessage: string;
     
+    // Clone the response before reading its body to avoid 'body already read' errors
+    const resClone = res.clone();
+    
     try {
       // Try to parse the response as JSON first
-      const errorData = await res.json();
+      const errorData = await resClone.json();
       
       if (res.status === 429) {
         // Rate limit error - include the reset time if available
@@ -19,8 +22,13 @@ async function throwIfResNotOk(res: Response) {
       }
     } catch (e) {
       // If response is not JSON, use text
-      const text = await res.text();
-      errorMessage = text || `${res.status}: ${res.statusText}`;
+      try {
+        const text = await res.text();
+        errorMessage = text || `${res.status}: ${res.statusText}`;
+      } catch (textError) {
+        // If we can't read the body at all, just use the status
+        errorMessage = `${res.status}: ${res.statusText}`;
+      }
     }
     
     throw new Error(errorMessage);

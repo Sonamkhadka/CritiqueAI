@@ -377,10 +377,16 @@ async function analyzeWithOpenRouter(text: string, openRouterModel: OpenRouterMo
       } else {
         parsedData = JSON.parse(content);
       }
-    } catch (parseError) {
+    } catch (parseError: unknown) {
       console.error("JSON parsing error:", parseError);
       console.log("Problematic content:", content);
-      throw new SyntaxError(`Failed to parse OpenRouter response: ${parseError.message}`);
+      
+      // Handle error message safely
+      const errorMessage = parseError instanceof Error 
+        ? parseError.message 
+        : 'Unknown parsing error';
+        
+      throw new SyntaxError(`Failed to parse OpenRouter response: ${errorMessage}`);
     }
 
     // Validate the response structure

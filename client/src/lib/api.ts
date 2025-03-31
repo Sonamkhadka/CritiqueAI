@@ -41,10 +41,23 @@ export async function analyzeArgument(
     console.error("Error analyzing argument:", error);
     
     if (error instanceof Response) {
-      const errorText = await error.text();
-      throw new Error(errorText || "Failed to analyze argument");
+      try {
+        // Clone the response before reading its body
+        const clonedResponse = error.clone();
+        const errorText = await clonedResponse.text();
+        throw new Error(errorText || "Failed to analyze argument");
+      } catch (bodyReadError) {
+        // If we can't read the body, just use a generic message
+        throw new Error("Failed to analyze argument: Network error");
+      }
     }
     
-    throw error;
+    // Handle standard errors
+    if (error instanceof Error) {
+      throw error;
+    }
+    
+    // Handle unknown error types
+    throw new Error("An unexpected error occurred");
   }
 }

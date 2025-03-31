@@ -8,10 +8,10 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="text-center md:text-left">
             <h3 className="text-lg font-medium text-gray-900">
-              Logos Argument Analyzer
+              Critique AI
             </h3>
             <p className="text-sm text-gray-500 mt-1">
-              Analyze arguments using AI for logical structure and fallacies
+              Critical analysis of arguments using AI for logical evaluation
             </p>
           </div>
           
@@ -35,7 +35,7 @@ export function Footer() {
         <div className="mt-6 pt-6 border-t border-gray-100">
           <div className="text-center text-xs text-gray-500">
             <p>
-              &copy; {new Date().getFullYear()} Logos Argument Analyzer. Open source project for
+              &copy; {new Date().getFullYear()} Critique AI. Open source project for
               critical thinking and rhetorical analysis.
             </p>
             <p className="mt-1">
