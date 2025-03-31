@@ -330,23 +330,34 @@ async function analyzeWithOpenRouter(text: string, openRouterModel: OpenRouterMo
       throw new Error(`OpenRouter API error: ${errorData.error?.message || response.statusText}`);
     }
 
-    const responseData = await response.json();
+    let responseData;
+    try {
+      responseData = await response.json();
+      if (!responseData || !responseData.choices || !responseData.choices.length) {
+        console.log("Invalid response structure:", JSON.stringify(responseData));
+        throw new Error("OpenRouter returned an invalid response structure");
+      }
+    } catch (jsonError) {
+      console.error("Error parsing response JSON:", jsonError);
+      throw new Error("Failed to parse response from OpenRouter");
+    }
+
     const content = responseData.choices?.[0]?.message?.content;
 
     // Debug information
     console.log("OpenRouter response status:", response.status);
-    
+
     if (!response.ok) {
       const responseText = await response.text();
       console.log("OpenRouter error response:", responseText);
       throw new Error(`OpenRouter API returned status ${response.status}: ${responseText}`);
     }
-    
+
     if (!content) {
       console.log("Full OpenRouter response:", await response.text());
       throw new Error("OpenRouter returned an empty response content");
     }
-    
+
     // Debug the content
     console.log("OpenRouter content preview:", content.substring(0, 200));
 
