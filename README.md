@@ -75,7 +75,7 @@ Expected JSON structure:
 - **Backend**: Node.js with Express
 - **Data Visualization**: Recharts
 - **State Management**: React Hooks
-- **AI Integration**: 
+- **AI Integration**:
   - OpenRouter API (default, providing free access to various AI models)
   - OpenAI API (GPT-4o - latest model as of March 2025, requires API key)
   - DeepSeek API (DeepSeek Chat, requires API key)
@@ -105,24 +105,25 @@ Expected JSON structure:
    ```
 
 3. **API Key Configuration**:
-   
+
    The application comes with OpenRouter integration for free access to AI models.
-   
+
    If you want to use premium AI services directly, clone this repository and add the following API keys to your `.env` file:
-   
+
    - [OpenRouter API Key](https://openrouter.ai/) (included by default)
    - [OpenAI API Key](https://platform.openai.com/api-keys) (optional, for direct OpenAI access)
    - [DeepSeek API Key](https://platform.deepseek.com/) (optional, for direct DeepSeek access)
    - [Google Gemini API Key](https://ai.google.dev/) (optional, for direct Google Gemini access)
-   
+
    Configure them in your `.env` file:
    ```
    OPENROUTER_API_KEY=your_openrouter_key_here
    OPENAI_API_KEY=your_openai_key_here
    DEEPSEEK_API_KEY=your_deepseek_key_here
    GEMINI_API_KEY=your_gemini_key_here
+   DATABASE_URL=your_database_connection_string_here
    ```
-   
+
    **Note**: At minimum, you need the OPENROUTER_API_KEY for the application to function with the free models.
 
 4. Start the development server:
@@ -131,6 +132,18 @@ Expected JSON structure:
    ```
 
 5. Open your browser and navigate to `http://localhost:5000`
+
+## Deployment
+
+### Vercel Deployment
+
+This application is configured for deployment on Vercel. For detailed instructions, see the [Vercel Deployment Guide](VERCEL_DEPLOYMENT.md).
+
+Quick steps:
+1. Fork or clone this repository to your GitHub account
+2. Connect your repository to Vercel
+3. Configure the environment variables (OPENROUTER_API_KEY, DATABASE_URL, etc.)
+4. Deploy!
 
 ## Usage
 
