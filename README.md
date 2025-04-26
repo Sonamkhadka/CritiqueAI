@@ -121,7 +121,6 @@ Expected JSON structure:
    OPENAI_API_KEY=your_openai_key_here
    DEEPSEEK_API_KEY=your_deepseek_key_here
    GEMINI_API_KEY=your_gemini_key_here
-   DATABASE_URL=your_database_connection_string_here
    ```
 
    **Note**: At minimum, you need the OPENROUTER_API_KEY for the application to function with the free models.
@@ -142,7 +141,7 @@ This application is configured for deployment on Vercel. For detailed instructio
 Quick steps:
 1. Fork or clone this repository to your GitHub account
 2. Connect your repository to Vercel
-3. Configure the environment variables (OPENROUTER_API_KEY, DATABASE_URL, etc.)
+3. Configure the environment variables (OPENROUTER_API_KEY and optionally other API keys)
 4. Deploy!
 
 ## Usage

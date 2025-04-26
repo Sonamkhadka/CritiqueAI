@@ -10,7 +10,6 @@ This guide will help you deploy the Critique AI application to Vercel.
    - OPENAI_API_KEY (optional, for direct GPT-4o access)
    - DEEPSEEK_API_KEY (optional, for direct DeepSeek Chat access)
    - GEMINI_API_KEY (optional, for direct Gemini 2.5 Pro access)
-3. A PostgreSQL database (Vercel Postgres, Neon, Supabase, etc.)
 
 ## Deployment Steps
 
@@ -31,11 +30,10 @@ Make sure you have a copy of the repository in your GitHub account.
 
 ### 3. Configure Environment Variables
 
-Add the following environment variables in the Vercel project settings:
+Add the following environment variable in the Vercel project settings:
 
 ```
 OPENROUTER_API_KEY=your_openrouter_api_key_here
-DATABASE_URL=your_database_connection_string_here
 ```
 
 Optionally, add these if you want to use the premium models directly:
@@ -56,9 +54,7 @@ Click "Deploy" and wait for the build to complete.
 
 The application implements rate limiting (5 requests per minute). In a serverless environment, this is implemented on a per-instance basis, which means the actual rate limit might be less restrictive than intended if your application scales to multiple instances.
 
-### Database Connections
 
-Make sure your database connection string is correctly configured and that the database is accessible from Vercel's servers.
 
 ### API Keys
 
