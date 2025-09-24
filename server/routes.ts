@@ -5,6 +5,7 @@ import { analyzeArgumentWithAI } from "./aiService";
 import { analysisRequestSchema } from "@shared/schema";
 import { z, ZodError } from "zod";
 import { globalRateLimiter } from "./rateLimiter";
+import { getServerConfig, isValidOpenRouterModel } from "./config";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Rate limiting middleware for the analyze endpoint
@@ -34,12 +35,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
     next();
   };
   
+  // Get configuration for frontend
+  app.get("/api/config", (_req, res) => {
+    try {
+      const config = getServerConfig();
+      res.json(config);
+    } catch (error) {
+      console.error("Error getting server config:", error);
+      res.status(500).json({ message: "Failed to get configuration" });
+    }
+  });
+
+  // Lightweight health/diagnostics (no secrets leaked)
+  app.get("/api/health", (_req, res) => {
+    res.json({
+      ok: true,
+      env: {
+        OPENROUTER_API_KEY: Boolean(process.env.OPENROUTER_API_KEY),
+        OPENAI_API_KEY: Boolean(process.env.OPENAI_API_KEY),
+        DEEPSEEK_API_KEY: Boolean(process.env.DEEPSEEK_API_KEY),
+        GEMINI_API_KEY: Boolean(process.env.GEMINI_API_KEY),
+      },
+    });
+  });
+
   // API endpoint for analyzing an argument
   app.post("/api/analyze", rateLimitMiddleware, async (req, res) => {
     try {
       // Validate the request body
       const validatedData = analysisRequestSchema.parse(req.body);
       const { text, model, openRouterModel } = validatedData;
+
+      // Additional validation for OpenRouter models
+      if (model === "openrouter" && openRouterModel) {
+        if (!isValidOpenRouterModel(openRouterModel)) {
+          return res.status(400).json({
+            message: `Invalid OpenRouter model: ${openRouterModel}. Please check your configuration.`
+          });
+        }
+      }
 
       // Perform the analysis with the selected AI model
       const result = await analyzeArgumentWithAI(text, model, openRouterModel);

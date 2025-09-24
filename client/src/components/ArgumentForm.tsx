@@ -9,12 +9,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Loader2, Info as InfoIcon } from "lucide-react";
-import { AnalysisResult, OpenRouterModel, openRouterModels } from "@shared/schema";
+import { AnalysisResult, OpenRouterModel } from "@shared/schema";
 import { analyzeArgument } from "@/lib/api";
 import { LogoSvg } from "@/components/Logo";
+import { getAppConfig, AppConfig } from "@/lib/config";
 
 interface ArgumentFormProps {
   onAnalysisRequested: (
@@ -26,15 +26,49 @@ interface ArgumentFormProps {
   isLoading: boolean;
 }
 
+// Popular example statements for testing
+const EXAMPLE_STATEMENTS = [
+  {
+    title: "Climate Change Denial",
+    text: "Climate change is fake because it snowed yesterday. If global warming was real, it would never be cold anywhere. Plus, scientists have been wrong before about many things."
+  },
+  {
+    title: "Social Media Debate",
+    text: "Social media is destroying our society because kids these days can't have real conversations anymore. Back in my day, we talked face-to-face and people were happier. Everyone on social media is fake and depressed."
+  },
+  {
+    title: "Economic Argument",
+    text: "Raising the minimum wage will destroy small businesses and increase unemployment. If companies have to pay more, they'll just hire fewer people. It's basic economics that government interference always makes things worse."
+  },
+  {
+    title: "Education Policy",
+    text: "Schools should ban all technology from classrooms because students learn better with traditional methods. Computers and tablets are just distractions that make kids lazy and unable to think for themselves."
+  },
+  {
+    title: "Health & Nutrition",
+    text: "Organic food is a complete scam created by marketing companies. There's no scientific difference between organic and regular food. People who buy organic are just wasting money on expensive labels and feeling superior."
+  }
+];
+
 export default function ArgumentForm({
   onAnalysisRequested,
   isLoading,
 }: ArgumentFormProps) {
   const [text, setText] = useState("");
-  const [model, setModel] = useState("openrouter"); // Default to OpenRouter since it's free
-  const [openRouterModel, setOpenRouterModel] = useState<OpenRouterModel>("deepseek/deepseek-v3-base:free");
+  const [model, setModel] = useState("openrouter");
+  const [openRouterModel, setOpenRouterModel] = useState<OpenRouterModel>("mistralai/mistral-7b-instruct:free");
   const [localError, setLocalError] = useState<string | null>(null);
   const [showApiKeyWarning, setShowApiKeyWarning] = useState(false);
+  const [config, setConfig] = useState<AppConfig | null>(null);
+
+  // Load configuration on component mount
+  useEffect(() => {
+    getAppConfig().then((appConfig) => {
+      setConfig(appConfig);
+      setModel(appConfig.defaultAIModel);
+      setOpenRouterModel(appConfig.defaultOpenRouterModel as OpenRouterModel);
+    }).catch(console.error);
+  }, []);
 
   // Update API key warning when model changes
   useEffect(() => {
@@ -86,32 +120,57 @@ export default function ArgumentForm({
   };
 
   return (
-    <Card>
-      <CardContent className="pt-6">
-        <h2 className="text-lg font-medium text-gray-900 mb-4">
-          Analyze Your Argument
+    <div className="neo-card p-6">
+      <div className="bg-primary text-primary-foreground p-4 mb-6 neo-border neo-shadow-secondary">
+        <h2 className="text-2xl font-bold uppercase tracking-wider font-arvo">
+          🧠 ANALYZE YOUR ARGUMENT
         </h2>
+      </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <Label htmlFor="argumentText" className="mb-1">
-              Enter your argument text:
+            <Label htmlFor="exampleSelect" className="mb-1 font-arvo">
+              🎯 Try a Popular Debate Topic:
+            </Label>
+            <Select
+              onValueChange={(value) => {
+                const example = EXAMPLE_STATEMENTS.find(ex => ex.title === value);
+                if (example) setText(example.text);
+              }}
+              disabled={isLoading}
+            >
+              <SelectTrigger className="neo-select mb-3">
+                <SelectValue placeholder="Choose an example to analyze..." />
+              </SelectTrigger>
+              <SelectContent>
+                {EXAMPLE_STATEMENTS.map((example) => (
+                  <SelectItem key={example.title} value={example.title}>
+                    {example.title}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="mb-4">
+            <Label htmlFor="argumentText" className="mb-1 font-arvo">
+              Or Enter Your Own Argument:
             </Label>
             <Textarea
               id="argumentText"
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="Type or paste your argument here. For example: 'Climate change is primarily caused by human activities. The rapid increase in global temperatures correlates with industrial development. Scientists have found that greenhouse gas emissions from factories and vehicles trap heat in the atmosphere.'"
-              className="resize-none min-h-[160px]"
+              placeholder="DROP YOUR ARGUMENT HERE AND WATCH US DEMOLISH IT..."
+              className="resize-none min-h-[160px] neo-input text-base font-bold"
               disabled={isLoading}
             />
           </div>
 
           <div className="mb-4">
-            <Label htmlFor="aiModel" className="mb-1">
+            <Label htmlFor="aiModel" className="mb-1 font-arvo">
               Select AI Provider:
             </Label>
-            <Select 
-              value={model} 
+            <Select
+              value={model}
               onValueChange={setModel}
               disabled={isLoading}
             >
@@ -120,26 +179,26 @@ export default function ArgumentForm({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="openrouter">OpenRouter (Free)</SelectItem>
-                <SelectItem value="openai">OpenAI (API Key Required)</SelectItem>
-                <SelectItem value="deepseek">DeepSeek (API Key Required)</SelectItem>
-                <SelectItem value="gemini">Google (API Key Required)</SelectItem>
+                <SelectItem value="openai">OpenAI (Clone repo to use)</SelectItem>
+                <SelectItem value="deepseek">DeepSeek (Clone repo to use)</SelectItem>
+                <SelectItem value="gemini">Google (Clone repo to use)</SelectItem>
               </SelectContent>
             </Select>
             {showApiKeyWarning && (
               <p className="mt-1 text-xs text-amber-600">
                 <AlertCircle className="h-3 w-3 inline-block mr-1" />
-                This model requires an API key. Please add it to your environment variables if you want to use it.
+                To use this model, you need to clone the repository from <a href="https://github.com/Sonamkhadka/Argument-Analyzer.git" target="_blank" rel="noopener noreferrer" className="underline">GitHub</a> and add your own API key.
               </p>
             )}
           </div>
 
           {model === "openrouter" && (
             <div className="mb-6">
-              <Label htmlFor="openRouterModel" className="mb-1">
+              <Label htmlFor="openRouterModel" className="mb-1 font-arvo">
                 Select OpenRouter Model:
               </Label>
-              <Select 
-                value={openRouterModel} 
+              <Select
+                value={openRouterModel}
                 onValueChange={(value) => setOpenRouterModel(value as OpenRouterModel)}
                 disabled={isLoading}
               >
@@ -147,13 +206,27 @@ export default function ArgumentForm({
                   <SelectValue placeholder="Select a model" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="deepseek/deepseek-v3-base:free">DeepSeek v3 Base</SelectItem>
-                  <SelectItem value="google/gemini-2.5-pro-exp-03-25:free">Gemini 2.5 Pro</SelectItem>
-                  <SelectItem value="deepseek/deepseek-r1-zero:free">DeepSeek R1 Zero</SelectItem>
-                  <SelectItem value="openai/gpt-4o-mini">GPT-4o Mini</SelectItem>
+                  {config ? config.openRouterModels.map((modelId) => {
+                    // Get friendly name for display
+                    let displayName = modelId;
+                    if (modelId === "google/gemini-2.5-pro-exp-03-25:free") displayName = "Gemini 2.5 Pro";
+                    else if (modelId === "deepseek/deepseek-r1-zero:free") displayName = "DeepSeek R1 Zero";
+                    else if (modelId === "openai/gpt-4o-mini") displayName = "GPT-4o Mini";
+                    else if (modelId === "meta-llama/llama-3.3-70b-instruct:free") displayName = "Llama 3.3 70B";
+                    else if (modelId === "mistralai/mistral-7b-instruct:free") displayName = "Mistral 7B";
+                    else if (modelId === "x-ai/grok-4-fast:free") displayName = "Grok 4 Fast";
+
+                    return (
+                      <SelectItem key={modelId} value={modelId}>
+                        {displayName}
+                      </SelectItem>
+                    );
+                  }) : (
+                    <SelectItem value="loading" disabled>Loading models...</SelectItem>
+                  )}
                 </SelectContent>
               </Select>
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-muted-foreground">
                 These models are accessible through OpenRouter's free tier.  Please be aware that performance may vary due to OpenRouter's infrastructure. We appreciate your patience.
               </p>
             </div>
@@ -168,28 +241,25 @@ export default function ArgumentForm({
             </Alert>
           )}
 
-          <div className="flex justify-end">
-            <Button 
-              type="submit" 
+          <div className="flex justify-center">
+            <Button
+              type="submit"
               disabled={isLoading}
+              className="neo-button bg-destructive text-destructive-foreground text-xl font-bold px-12 py-4 uppercase tracking-wider hover:bg-destructive/90"
             >
               {isLoading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Analyzing...
+                  <Loader2 className="mr-3 h-6 w-6 animate-spin" />
+                  DEMOLISHING...
                 </>
               ) : (
                 <>
-                  <span className="mr-2 h-4 w-4">
-                    <LogoSvg />
-                  </span>
-                  Analyze Argument
+                  💥 DESTROY THIS ARGUMENT
                 </>
               )}
             </Button>
           </div>
         </form>
-      </CardContent>
-    </Card>
+    </div>
   );
 }

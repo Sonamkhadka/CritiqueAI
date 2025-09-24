@@ -36,13 +36,13 @@ export const insertAnalysisReportSchema = createInsertSchema(analysisReports).pi
   aiModel: true
 });
 
-// Emotion scores interface
+// Emotion scores interface - make optional with defaults
 export interface EmotionScores {
-  Anger: number;
-  Sadness: number;
-  Joy: number;
-  Fear: number;
-  Surprise: number;
+  Anger?: number;
+  Sadness?: number;
+  Joy?: number;
+  Fear?: number;
+  Surprise?: number;
 }
 
 // Definition for a fallacy
@@ -75,21 +75,32 @@ export interface AnalysisResult {
 export type InsertAnalysisReport = z.infer<typeof insertAnalysisReportSchema>;
 export type AnalysisReport = typeof analysisReports.$inferSelect;
 
-// OpenRouter free model options
-export const openRouterModels = [
-  "deepseek/deepseek-v3-base:free",
+// OpenRouter free model options - configurable via environment
+const defaultModels = [
+  "mistralai/mistral-7b-instruct:free",
+  "meta-llama/llama-3.3-70b-instruct:free",
   "google/gemini-2.5-pro-exp-03-25:free",
   "deepseek/deepseek-r1-zero:free",
   "openai/gpt-4o-mini"
 ] as const;
 
+// Get models from environment or use defaults
+const getOpenRouterModels = () => {
+  if (typeof process !== 'undefined' && process.env?.OPENROUTER_MODELS) {
+    return process.env.OPENROUTER_MODELS.split(',').map(m => m.trim()) as readonly string[];
+  }
+  return defaultModels;
+};
+
+export const openRouterModels = getOpenRouterModels();
+
 export type OpenRouterModel = typeof openRouterModels[number];
 
-// Schema for the analysis request
+// Schema for the analysis request - make openRouterModel flexible
 export const analysisRequestSchema = z.object({
   text: z.string().min(1, "Argument text is required"),
   model: z.enum(["openai", "deepseek", "gemini", "openrouter"]),
-  openRouterModel: z.enum(openRouterModels).optional()
+  openRouterModel: z.string().optional() // Allow any string instead of enum
 });
 
 export type AnalysisRequest = z.infer<typeof analysisRequestSchema>;

@@ -17,22 +17,24 @@ The project strives to make critical reasoning tools accessible to students, edu
 
 ## Core Features
 
-- **Free Access via OpenRouter**: Access free models from DeepSeek, Google, and OpenAI through OpenRouter
+- **Free Access via OpenRouter**: Access free models including Grok, DeepSeek, Google Gemini, and more through OpenRouter
+- **Popular Example Arguments**: Quick-start with pre-loaded controversial topics like climate change, social media, economics, and education
+- **Configurable Models**: Easily customize available AI models through environment variables
 - **Premium AI Models**: For those who want to use their own API keys, choose between OpenAI (GPT-4o), DeepSeek (DeepSeek Chat), and Google (Gemini 2.5 Pro)
 - **Claim & Premises Extraction**: Automatically identify the main claim and supporting premises
-- **Fallacy Detection**: Identify logical fallacies in arguments
+- **Fallacy Detection**: Identify logical fallacies in arguments with detailed explanations
 - **Emotional Analysis**: Score emotional content across five dimensions (Anger, Sadness, Joy, Fear, Surprise)
 - **Critical Evaluation**: Assess strengths, weaknesses, and unstated assumptions
-- **Local Storage History**: Save your analysis results for future reference
-- **Clean, Modern UI**: Intuitive interface with responsive design
-- **Rate Limiting**: 5 requests per minute to ensure fair usage
+- **Neobrutalism Design**: Bold, aggressive UI that matches the app's confrontational approach
+- **Rate Limiting**: 5 requests per minute to prevent API abuse
+- **Responsive Design**: Works seamlessly across desktop and mobile devices
 
 ## How It Works
 
-1. Enter your argument text in the input area
-2. Select from OpenRouter's free models or use your own API keys for OpenAI, DeepSeek, or Google
-3. Click "Analyze" to process your text
-4. View the comprehensive analysis results with logical structure, emotional tone, fallacies, and counter-arguments
+1. **Choose an Example or Enter Your Own**: Select from popular debate topics (climate change denial, social media debates, economic arguments, etc.) or write your own argument
+2. **Select AI Model**: Choose from configurable OpenRouter free models or use your own API keys for premium services
+3. **Analyze**: Click the bold "DESTROY THIS ARGUMENT" button to process your text
+4. **Review Results**: View comprehensive analysis with logical structure, emotional tone, fallacies, and counter-arguments
 
 Behind the scenes:
 - The frontend UI sends the text to the backend
@@ -117,13 +119,21 @@ Expected JSON structure:
 
    Configure them in your `.env` file:
    ```
+   # Required for free model access
    OPENROUTER_API_KEY=your_openrouter_key_here
+
+   # Optional for premium direct access
    OPENAI_API_KEY=your_openai_key_here
    DEEPSEEK_API_KEY=your_deepseek_key_here
    GEMINI_API_KEY=your_gemini_key_here
+
+   # Model Configuration (customize available models)
+   DEFAULT_AI_MODEL=openrouter
+   DEFAULT_OPENROUTER_MODEL=x-ai/grok-4-fast:free
+   OPENROUTER_MODELS=x-ai/grok-4-fast:free,deepseek/deepseek-chat-v3.1:free,openai/gpt-4o-mini
    ```
 
-   **Note**: At minimum, you need the OPENROUTER_API_KEY for the application to function with the free models.
+   **Note**: The OPENROUTER_API_KEY is required for free model access. You can customize which models appear in the dropdown by modifying the OPENROUTER_MODELS environment variable.
 
 4. Start the development server:
    ```bash
@@ -146,14 +156,19 @@ Quick steps:
 
 ## Usage
 
-1. Enter the text you want to analyze in the input field
-2. Select which AI provider you want to use:
-   - **OpenRouter** (free, default): Choose from available free models like DeepSeek, Google Gemini, or GPT-4o Mini
-   - **OpenAI, DeepSeek, or Google** (requires your own API key): Direct access to premium models
-3. Click the "Analyze" button
-4. View the comprehensive analysis of your argument with logical structure, emotional analysis, and critical evaluation
-5. Save or revisit previous analyses from the history panel
-6. Note: Rate limiting is in place (5 requests per minute) to prevent API abuse
+1. **Quick Start with Examples**: Select from pre-loaded controversial arguments (climate change denial, social media debates, economic policy, etc.) to see the analyzer in action
+2. **Or Enter Your Own**: Write your own argument in the text area
+3. **Choose AI Model**:
+   - **OpenRouter** (free, default): Access models like Grok 4 Fast, DeepSeek, Google Gemini, and more
+   - **Premium Services** (requires your own API key): Direct access to OpenAI GPT-4o, DeepSeek Chat, or Google Gemini
+4. **Analyze**: Click "💥 DESTROY THIS ARGUMENT" to process your text
+5. **Review Results**: Get comprehensive analysis including:
+   - Logical structure (claims and premises)
+   - Emotional tone analysis with numerical scores
+   - Identified logical fallacies with explanations
+   - Critical evaluation of weaknesses and assumptions
+   - Suggested counter-arguments
+6. **Rate Limiting**: 5 requests per minute to prevent API abuse and ensure fair access
 
 ## License
 

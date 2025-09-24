@@ -1,0 +1,115 @@
+/* Neobrutalism Theme - Light Mode */
+:root {
+  /* Core Neobrutalism colors - Bold primary colors */
+  --background: 60 100% 95%; /* Off-white/cream background */
+  --foreground: 0 0% 0%; /* Pure black text */
+
+  /* Cards with bold backgrounds */
+  --card: 0 0% 100%; /* White cards */
+  --card-foreground: 0 0% 0%; /* Black text on cards */
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 0%;
+
+  /* Bold primary colors - Electric Blue */
+  --primary: 210 100% 50%; /* Bright electric blue */
+  --primary-foreground: 0 0% 100%; /* White text on blue */
+
+  /* Bold secondary - Neon Yellow */
+  --secondary: 60 100% 50%; /* Bright yellow */
+  --secondary-foreground: 0 0% 0%; /* Black text on yellow */
+
+  /* Muted areas */
+  --muted: 0 0% 90%; /* Light gray */
+  --muted-foreground: 0 0% 20%; /* Dark gray text */
+
+  /* Accent - Hot Pink/Red */
+  --accent: 350 100% 60%; /* Hot pink/red */
+  --accent-foreground: 0 0% 100%; /* White text */
+
+  /* Destructive - Bold Red */
+  --destructive: 0 100% 50%; /* Pure red */
+  --destructive-foreground: 0 0% 100%; /* White text */
+
+  /* Borders - Thick black borders */
+  --border: 0 0% 0%; /* Black borders */
+  --input: 0 0% 100%; /* White input backgrounds */
+  --ring: 0 0% 0%; /* Black focus rings */
+
+  /* No rounded corners - Neobrutalism uses sharp edges */
+  --radius: 0px;
+
+  /* Bold chart colors */
+  --chart-1: 210 100% 50%; /* Electric blue */
+  --chart-2: 60 100% 50%; /* Bright yellow */
+  --chart-3: 120 100% 40%; /* Bright green */
+  --chart-4: 350 100% 60%; /* Hot pink */
+  --chart-5: 30 100% 50%; /* Orange */
+
+  --sidebar-background: 0 0% 100%;
+  --sidebar-foreground: 0 0% 0%;
+  --sidebar-primary: 210 100% 50%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 350 100% 60%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 0 0% 0%;
+  --sidebar-ring: 0 0% 0%;
+}
+
+/* Neobrutalism Theme - Dark Mode */
+.dark {
+  /* Dark mode with bold contrasts */
+  --background: 0 0% 8%; /* Very dark background */
+  --foreground: 0 0% 100%; /* Pure white text */
+
+  /* Dark cards */
+  --card: 0 0% 12%; /* Dark gray cards */
+  --card-foreground: 0 0% 100%; /* White text on cards */
+
+  --popover: 0 0% 8%;
+  --popover-foreground: 0 0% 100%;
+
+  /* Bright primary colors for dark mode */
+  --primary: 210 100% 60%; /* Brighter electric blue */
+  --primary-foreground: 0 0% 0%; /* Black text on blue */
+
+  /* Bright secondary */
+  --secondary: 60 100% 60%; /* Brighter yellow */
+  --secondary-foreground: 0 0% 0%; /* Black text on yellow */
+
+  /* Muted areas in dark mode */
+  --muted: 0 0% 20%; /* Dark gray */
+  --muted-foreground: 0 0% 80%; /* Light gray text */
+
+  /* Bright accent */
+  --accent: 350 100% 70%; /* Brighter hot pink */
+  --accent-foreground: 0 0% 0%; /* Black text */
+
+  /* Bright destructive */
+  --destructive: 0 100% 60%; /* Bright red */
+  --destructive-foreground: 0 0% 100%; /* White text */
+
+  /* White borders for dark mode contrast */
+  --border: 0 0% 100%; /* White borders */
+  --input: 0 0% 12%; /* Dark input backgrounds */
+  --ring: 0 0% 100%; /* White focus rings */
+
+  /* Same sharp corners */
+  --radius: 0px;
+
+  /* Bright chart colors for dark mode */
+  --chart-1: 210 100% 60%; /* Bright electric blue */
+  --chart-2: 60 100% 60%; /* Bright yellow */
+  --chart-3: 120 100% 50%; /* Bright green */
+  --chart-4: 350 100% 70%; /* Bright hot pink */
+  --chart-5: 30 100% 60%; /* Bright orange */
+
+  --sidebar-background: 0 0% 8%;
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-primary: 210 100% 60%;
+  --sidebar-primary-foreground: 0 0% 0%;
+  --sidebar-accent: 350 100% 70%;
+  --sidebar-accent-foreground: 0 0% 0%;
+  --sidebar-border: 0 0% 100%;
+  --sidebar-ring: 0 0% 100%;
+}

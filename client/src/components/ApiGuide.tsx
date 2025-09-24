@@ -7,10 +7,12 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export default function ApiGuide() {
   return (
-    <Card className="overflow-hidden border-gray-200">
-      <CardHeader className="border-b border-gray-100">
-        <CardTitle className="text-lg font-medium text-gray-900">Resources & Information</CardTitle>
-        <CardDescription>
+    <Card className="overflow-hidden border-border">
+      <CardHeader className="border-b border-border">
+        <CardTitle className="text-lg font-medium text-foreground font-arvo">
+          API Guide
+        </CardTitle>
+        <CardDescription className="text-muted-foreground font-arvo">
           Learn about the AI models and how to use this tool effectively
         </CardDescription>
       </CardHeader>
@@ -24,18 +26,18 @@ export default function ApiGuide() {
 
         <TabsContent value="setup" className="p-4">
           <div className="space-y-4">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               To use all AI models in the Critique AI, you'll need these API keys:
             </p>
 
             <ul className="space-y-3 text-sm">
-              <li className="flex items-start border border-gray-200 rounded-md p-3">
+              <li className="flex items-start border border-border rounded-md p-3">
                 <div className="p-2 rounded-md mr-3">
-                  <Lock className="h-4 w-4 text-gray-600" />
+                  <Lock className="h-4 w-4 text-muted-foreground" />
                 </div>
                 <div>
-                  <span className="font-medium text-gray-800">OPENAI_API_KEY</span>
-                  <p className="text-xs text-gray-600 mt-1">
+                  <span className="font-medium text-foreground">OPENAI_API_KEY</span>
+                  <p className="text-xs text-muted-foreground mt-1">
                     Powers GPT-4o analysis. Get from{" "}
                     <a href="https://platform.openai.com/account/api-keys" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
                       OpenAI Platform
@@ -49,7 +51,7 @@ export default function ApiGuide() {
                   <Lock className="h-4 w-4 text-gray-600" />
                 </div>
                 <div>
-                  <span className="font-medium text-gray-800">DEEPSEEK_API_KEY</span>
+                  <span className="font-medium text-foreground">DEEPSEEK_API_KEY</span>
                   <p className="text-xs text-gray-600 mt-1">
                     For DeepSeek Chat analysis. Get from{" "}
                     <a href="https://platform.deepseek.com" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
@@ -64,7 +66,7 @@ export default function ApiGuide() {
                   <Lock className="h-4 w-4 text-gray-600" />
                 </div>
                 <div>
-                  <span className="font-medium text-gray-800">GEMINI_API_KEY</span>
+                  <span className="font-medium text-foreground">GEMINI_API_KEY</span>
                   <p className="text-xs text-gray-600 mt-1">
                     For Gemini Pro analysis. Get from{" "}
                     <a href="https://ai.google.dev/" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
@@ -79,6 +81,14 @@ export default function ApiGuide() {
                 <AlertTitle>About OpenRouter Models</AlertTitle>
                 <AlertDescription className="text-xs">
                   These models are accessible through <a href="https://openrouter.ai/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">OpenRouter's</a> free tier. Please be aware that performance may vary due to OpenRouter's infrastructure. We appreciate your patience if response times are slower than expected.
+                </AlertDescription>
+              </Alert>
+
+              <Alert className="mt-4 bg-amber-50 text-amber-800 border-amber-200">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Deployed Version Notice</AlertTitle>
+                <AlertDescription className="text-xs">
+                  In this deployed version, only OpenRouter models are available. To use OpenAI, DeepSeek, or Google models, you'll need to <a href="https://github.com/Sonamkhadka/Argument-Analyzer.git" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">clone the repository</a> and add your own API keys.
                 </AlertDescription>
               </Alert>
 

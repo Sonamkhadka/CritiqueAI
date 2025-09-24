@@ -39,11 +39,11 @@ const aiResponseSchema = z.object({
   claim: z.string(),
   premises: z.array(z.string()),
   emotions: z.object({
-    Anger: z.number().min(1).max(5),
-    Sadness: z.number().min(1).max(5),
-    Joy: z.number().min(1).max(5),
-    Fear: z.number().min(1).max(5),
-    Surprise: z.number().min(1).max(5)
+    Anger: z.number().min(1).max(5).optional().default(3),
+    Sadness: z.number().min(1).max(5).optional().default(3),
+    Joy: z.number().min(1).max(5).optional().default(3),
+    Fear: z.number().min(1).max(5).optional().default(3),
+    Surprise: z.number().min(1).max(5).optional().default(3)
   }),
   emotionJustification: z.string().optional(),
   fallacies: z.array(z.object({
@@ -297,14 +297,18 @@ async function analyzeWithOpenRouter(text: string, openRouterModel: OpenRouterMo
     let friendlyModelName = openRouterModel.split('/').pop()?.replace(':free', '') || openRouterModel;
 
     // Handle special cases for display name
-    if (openRouterModel === "deepseek/deepseek-v3-base:free") {
-      friendlyModelName = "DeepSeek v3 Base";
-    } else if (openRouterModel === "google/gemini-2.5-pro-exp-03-25:free") {
+    if (openRouterModel === "google/gemini-2.5-pro-exp-03-25:free") {
       friendlyModelName = "Gemini 2.5 Pro";
     } else if (openRouterModel === "deepseek/deepseek-r1-zero:free") {
       friendlyModelName = "DeepSeek R1 Zero";
     } else if (openRouterModel === "openai/gpt-4o-mini") {
       friendlyModelName = "GPT-4o Mini";
+    } else if (openRouterModel === "meta-llama/llama-3.3-70b-instruct:free") {
+      friendlyModelName = "Llama 3.3 70B";
+    } else if (openRouterModel === "mistralai/mistral-7b-instruct:free") {
+      friendlyModelName = "Mistral 7B";
+    } else if (openRouterModel === "x-ai/grok-4-fast:free") {
+      friendlyModelName = "Grok 4 Fast";
     }
 
     // Call the OpenRouter API
@@ -313,8 +317,8 @@ async function analyzeWithOpenRouter(text: string, openRouterModel: OpenRouterMo
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${apiKey}`,
-        "HTTP-Referer": "https://logos-argument-analyzer.app", // Your domain
-        "X-Title": "Logos Argument Analyzer"
+        "HTTP-Referer": "https://critique.automateworkflows.me/",
+        "X-Title": "Critique AI"
       },
       body: JSON.stringify({
         model: openRouterModel,
@@ -326,8 +330,29 @@ async function analyzeWithOpenRouter(text: string, openRouterModel: OpenRouterMo
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(`OpenRouter API error: ${errorData.error?.message || response.statusText}`);
+      let errorMessage = response.statusText;
+      try {
+        const errorData = await response.json();
+        if (errorData?.error?.message) errorMessage = errorData.error.message;
+      } catch {
+        try { errorMessage = await response.text(); } catch {}
+      }
+
+      const noEndpoints = /No endpoints found for/i.test(errorMessage);
+      const fallbackOrder: OpenRouterModel[] = [
+        "mistralai/mistral-7b-instruct:free",
+        "meta-llama/llama-3.3-70b-instruct:free",
+        "google/gemini-2.5-pro-exp-03-25:free",
+        "openai/gpt-4o-mini",
+      ];
+      const nextModel = fallbackOrder.find(m => m !== openRouterModel);
+
+      if (noEndpoints && nextModel) {
+        console.warn(`OpenRouter model unavailable (${openRouterModel}). Falling back to ${nextModel}.`);
+        return analyzeWithOpenRouter(text, nextModel);
+      }
+
+      throw new Error(`OpenRouter API error: ${errorMessage}`);
     }
 
     let responseData;

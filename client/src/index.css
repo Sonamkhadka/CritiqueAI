@@ -1,3 +1,5 @@
+@import "./lib/theme.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,17 +10,98 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply antialiased bg-background text-foreground;
+    font-family: "Arvo", serif;
   }
 
   .dark body {
     @apply bg-background text-foreground;
   }
-  .dark {
-    --background: 222.2 47.4% 11.2%;
-    --foreground: 210 40% 98%;
+}
 
-    --card: 222.2 47.4% 11.2%;
-    --card-foreground: 210 40% 98%;
+@layer utilities {
+  /* Arvo Font Utility Classes */
+  .font-arvo {
+    font-family: "Arvo", serif;
+  }
+
+  .arvo-regular {
+    font-family: "Arvo", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .arvo-bold {
+    font-family: "Arvo", serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  .arvo-regular-italic {
+    font-family: "Arvo", serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .arvo-bold-italic {
+    font-family: "Arvo", serif;
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  /* Neobrutalism Design Utilities */
+  .neo-border {
+    border: 3px solid hsl(var(--border));
+  }
+
+  .neo-border-thick {
+    border: 5px solid hsl(var(--border));
+  }
+
+  .neo-shadow {
+    box-shadow: 8px 8px 0px hsl(var(--border));
+  }
+
+  .neo-shadow-lg {
+    box-shadow: 12px 12px 0px hsl(var(--border));
+  }
+
+  .neo-shadow-primary {
+    box-shadow: 8px 8px 0px hsl(var(--primary));
+  }
+
+  .neo-shadow-secondary {
+    box-shadow: 8px 8px 0px hsl(var(--secondary));
+  }
+
+  .neo-shadow-accent {
+    box-shadow: 8px 8px 0px hsl(var(--accent));
+  }
+
+  .neo-button {
+    @apply neo-border neo-shadow font-bold px-6 py-3 transition-all duration-150;
+  }
+
+  .neo-button:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 6px 6px 0px hsl(var(--border));
+  }
+
+  .neo-button:active {
+    transform: translate(4px, 4px);
+    box-shadow: 4px 4px 0px hsl(var(--border));
+  }
+
+  .neo-card {
+    @apply neo-border neo-shadow bg-card text-card-foreground;
+  }
+
+  .neo-input {
+    @apply neo-border bg-input text-foreground px-4 py-3 font-bold;
+  }
+
+  .neo-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(var(--ring));
   }
 }

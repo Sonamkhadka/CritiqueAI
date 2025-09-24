@@ -67,151 +67,84 @@ export default function Hero() {
 
   return (
     <motion.section
-      className="relative overflow-hidden bg-white dark:bg-gray-900 py-6" // Added dark mode background
+      className="relative overflow-hidden bg-secondary neo-border-thick py-8"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
-      {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800 opacity-30"></div>
+      {/* Bold geometric background shapes */}
+      <div className="absolute inset-0">
+        <div className="absolute top-10 left-10 w-20 h-20 bg-primary neo-border rotate-12 neo-shadow"></div>
+        <div className="absolute top-20 right-20 w-16 h-16 bg-accent neo-border -rotate-12 neo-shadow"></div>
+        <div className="absolute bottom-20 left-1/4 w-12 h-12 bg-foreground neo-border rotate-45"></div>
+        <div className="absolute bottom-10 right-10 w-24 h-24 bg-primary neo-border neo-shadow-lg"></div>
+      </div>
 
-      {/* Moving particles background */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        {particles.map(particle => (
-          <motion.div
-            key={particle.id}
-            className="absolute rounded-full bg-primary/10 dark:bg-primary/20" //Adjusted for dark mode
-            style={{
-              left: `${particle.x}%`,
-              top: `${particle.y}%`,
-              width: `${particle.size}px`,
-              height: `${particle.size}px`,
-              opacity: particle.opacity,
-            }}
-            animate={{
-              x: [0, Math.random() * 100 - 50],
-              y: [0, Math.random() * 100 - 50],
-              opacity: [particle.opacity, particle.opacity / 2, particle.opacity],
-            }}
-            transition={{
-              duration: particle.duration,
-              delay: particle.delay,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "linear"
-            }}
-          />
-        ))}
-
-        {/* Larger floating elements for additional motion */}
-        <motion.div
-          className="absolute w-32 h-32 rounded-full bg-primary/5 dark:bg-primary/10 top-10 left-1/4 blur-xl" //Adjusted for dark mode
-          animate={{
-            y: [0, -8, 0],
-            transition: {
-              duration: 6,
-              repeat: Infinity,
-              repeatType: "mirror",
-              ease: "easeInOut"
-            }
-          }}
-          initial={{ opacity: 0.5 }}
-        />
-        <motion.div
-          className="absolute w-48 h-48 rounded-full bg-primary/5 dark:bg-primary/10 bottom-10 right-1/4 blur-xl" //Adjusted for dark mode
-          animate={{
-            x: [0, 8, 0],
-            transition: {
-              duration: 7,
-              repeat: Infinity,
-              repeatType: "mirror",
-              ease: "easeInOut"
-            }
-          }}
-          initial={{ opacity: 0.5 }}
-        />
-        <motion.div
-          className="absolute w-24 h-24 rounded-full bg-secondary/5 dark:bg-secondary/10 top-1/2 left-1/3 blur-xl" //Adjusted for dark mode
-          animate={{
-            scale: [1, 1.03, 1],
-            opacity: [0.6, 0.8, 0.6],
-            transition: {
-              duration: 8,
-              repeat: Infinity,
-              repeatType: "mirror",
-              ease: "easeInOut"
-            }
-          }}
-          initial={{ opacity: 0.5 }}
-        />
+      {/* Simple geometric patterns for Neobrutalism */}
+      <div className="absolute inset-0 z-0 overflow-hidden opacity-20">
+        <div className="absolute top-1/3 left-1/3 w-32 h-32 bg-foreground transform rotate-45"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-foreground transform -rotate-12"></div>
+        <div className="absolute top-1/4 right-1/3 w-16 h-16 bg-foreground transform rotate-12"></div>
       </div>
 
       <div className="container relative z-10 mx-auto px-4">
         <motion.div className="flex flex-col items-center text-center">
           <motion.div
             variants={itemVariants}
-            className="mb-2 inline-block rounded-full bg-primary/10 dark:bg-primary/20 px-3 py-1 text-sm font-medium text-primary dark:text-gray-100" //Dark mode text color
+            className="mb-4 inline-block bg-accent text-accent-foreground px-6 py-2 font-bold uppercase tracking-wider neo-border neo-shadow-primary text-sm"
             whileHover={{
-              scale: 1.03,
+              scale: 1.05,
               transition: { duration: 0.2 }
             }}
           >
-            Introducing Critique
+            🔥 BRUTAL ANALYSIS
           </motion.div>
 
           <motion.h1
             variants={itemVariants}
-            className="max-w-4xl text-2xl font-bold tracking-tight text-foreground dark:text-gray-100 sm:text-3xl md:text-4xl mb-2" //Dark mode text color
+            className="max-w-4xl text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-secondary-foreground mb-4 font-arvo uppercase leading-tight"
           >
-            Analyze Arguments with{" "}
+            DESTROY{" "}
             <motion.span
-              className="text-primary dark:text-gray-100 bg-clip-text" //Dark mode text color
+              className="bg-primary text-primary-foreground px-4 py-2 inline-block neo-border neo-shadow-accent -rotate-2"
               animate={{
-                opacity: [0.9, 1, 0.9],
-                scale: [1, 1.01, 1],
+                rotate: [-2, 2, -2],
                 transition: {
-                  duration: 5,
+                  duration: 3,
                   repeat: Infinity,
                   repeatType: "mirror",
                   ease: "easeInOut"
                 }
               }}
             >
-              AI-Powered Analysis
+              BAD LOGIC
             </motion.span>
+            <br />
+            WITH AI
           </motion.h1>
 
           <motion.p
             variants={itemVariants}
-            className="max-w-xl text-sm text-muted-foreground dark:text-gray-400 mb-3" //Dark mode text color
+            className="max-w-2xl text-lg font-bold text-secondary-foreground mb-6 leading-relaxed"
           >
-            Identify logical fallacies, evaluate premises, and strengthen your critical thinking with AI.
+            SMASH logical fallacies. CRUSH weak arguments. BUILD bulletproof reasoning with our BRUTAL AI analysis engine.
           </motion.p>
 
           <motion.div
             variants={itemVariants}
-            className="flex flex-row gap-3 justify-center"
+            className="flex flex-row gap-4 justify-center"
           >
             <motion.div
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{
+                scale: 1.05,
+                rotate: 1
+              }}
+              whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
-              <Button size="sm" className="px-3 shadow-sm">
-                Get Started
-                <motion.div
-                  animate={{
-                    x: [0, 4, 0],
-                    transition: {
-                      duration: 2,
-                      repeat: Infinity,
-                      repeatType: "mirror",
-                      ease: "easeInOut"
-                    }
-                  }}
-                >
-                  <ArrowRight className="ml-1 h-3 w-3" />
-                </motion.div>
+              <Button className="neo-button bg-primary text-primary-foreground text-lg font-bold px-8 py-4 uppercase tracking-wider">
+                ANALYZE NOW
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </motion.div>
           </motion.div>
