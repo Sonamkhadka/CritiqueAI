@@ -49,11 +49,11 @@ export default function ResultsDisplay({
               {
                 label: "Emotion Intensity (1-5)",
                 data: [
-                  result.emotions.Anger,
-                  result.emotions.Sadness,
-                  result.emotions.Joy,
-                  result.emotions.Fear,
-                  result.emotions.Surprise,
+                  result.emotions.Anger ?? 0,
+                  result.emotions.Sadness ?? 0,
+                  result.emotions.Joy ?? 0,
+                  result.emotions.Fear ?? 0,
+                  result.emotions.Surprise ?? 0,
                 ],
                 backgroundColor: [
                   "rgba(239, 68, 68, 0.8)",    // Red for Anger

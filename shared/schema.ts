@@ -1,5 +1,4 @@
 import { pgTable, text, serial, integer, boolean, jsonb, timestamp } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 export const users = pgTable("users", {
@@ -8,9 +7,9 @@ export const users = pgTable("users", {
   password: text("password").notNull(),
 });
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
+export const insertUserSchema = z.object({
+  username: z.string(),
+  password: z.string(),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -28,12 +27,12 @@ export const analysisReports = pgTable("analysis_reports", {
 });
 
 // Schema for creating a new analysis report
-export const insertAnalysisReportSchema = createInsertSchema(analysisReports).pick({
-  inputText: true,
-  claim: true,
-  premises: true,
-  emotions: true,
-  aiModel: true
+export const insertAnalysisReportSchema = z.object({
+  inputText: z.string(),
+  claim: z.string(),
+  premises: z.array(z.string()),
+  emotions: z.any(),
+  aiModel: z.string(),
 });
 
 // Emotion scores interface - make optional with defaults
